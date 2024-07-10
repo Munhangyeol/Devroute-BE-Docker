@@ -26,10 +26,13 @@ public class Company extends BaseTimeEntity {
     @Column(name = "click_count")
     private Long clickCount;
 
+    @OneToOne(mappedBy = "company", cascade = CascadeType.REMOVE)
+    private CompanyInfo companyInfo;
+
     @Builder
-    public Company(String name, String logoUrl) {
+    public Company(String name, String logoUrl, Long clickCount) {
         this.name = name;
         this.logoUrl = logoUrl;
-        this.clickCount = 0L;
+        this.clickCount = clickCount;
     }
 }
