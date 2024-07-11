@@ -5,19 +5,18 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Getter
 //@Setter
-public class Technology_stack {
+public class TechnologyStack {
     @Id
     @GeneratedValue
     @Column(name = "technology_stack_id")
     private Long id;
     private String name;
     private Long count;
-    public Technology_stack(){
+    public TechnologyStack(){
 
     }
     public Long getAddedCount(){
