@@ -19,6 +19,7 @@ import java.util.Map;
 import lombok.Getter;
 
 @Entity
+
 @Getter
 public class Roadmap_step_info {
     @Id
@@ -28,7 +29,7 @@ public class Roadmap_step_info {
 
     @OneToOne
     @JoinColumn(name="roadmap_step_id")
-    private Roadmap_step roadmap_step;
+    private RoadmapStep roadmap_step;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="company_id")
