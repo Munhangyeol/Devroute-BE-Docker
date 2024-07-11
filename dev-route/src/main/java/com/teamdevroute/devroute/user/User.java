@@ -1,6 +1,6 @@
 package com.teamdevroute.devroute.user;
 
-import com.teamdevroute.devroute.global.BaseEntity;
+import com.teamdevroute.devroute.global.BaseTimeEntity;
 import com.teamdevroute.devroute.user.enums.DevelopField;
 import com.teamdevroute.devroute.user.enums.LoginType;
 import com.teamdevroute.devroute.user.enums.UserRole;
@@ -20,7 +20,7 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User extends BaseEntity {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
