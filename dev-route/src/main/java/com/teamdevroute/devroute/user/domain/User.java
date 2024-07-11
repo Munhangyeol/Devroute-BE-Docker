@@ -40,7 +40,7 @@ public class User extends BaseTimeEntity {
     @Column(name = "login_type")
     private String loginType;
 
-    @Column(name = "role")
+    @Column(name = "user_role")
     @ColumnDefault("'USER'")
     private String userRole;
 
