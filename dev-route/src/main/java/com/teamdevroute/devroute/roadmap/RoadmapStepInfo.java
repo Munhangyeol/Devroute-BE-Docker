@@ -2,6 +2,7 @@ package com.teamdevroute.devroute.roadmap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teamdevroute.devroute.company.Company;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
@@ -18,6 +19,7 @@ import java.util.Map;
 import lombok.Getter;
 
 @Entity
+
 @Getter
 public class Roadmap_step_info {
     @Id
@@ -27,7 +29,7 @@ public class Roadmap_step_info {
 
     @OneToOne
     @JoinColumn(name="roadmap_step_id")
-    private Roadmap_step roadmap_step;
+    private RoadmapStep roadmap_step;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="company_id")
