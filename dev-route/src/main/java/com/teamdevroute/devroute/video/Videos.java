@@ -27,6 +27,7 @@ public class Videos {
     private String titile;
     private String thumnail_url;
     private Long price;
+    @Column(name = "video_rank")
     private Long rank;
     private String platform_name;
     private Long count;
