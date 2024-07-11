@@ -21,7 +21,7 @@ import lombok.Getter;
 @Entity
 
 @Getter
-public class Roadmap_step_info {
+public class RoadmapStepInfo {
     @Id
     @GeneratedValue
     @Column(name = "roadmap_step_info_id")
@@ -41,9 +41,7 @@ public class Roadmap_step_info {
     private Map<String, Object> companies;
     private int used_ratio;
 
-
-
-    public Roadmap_step_info() {
+    public RoadmapStepInfo() {
     }
 }
 @Converter
