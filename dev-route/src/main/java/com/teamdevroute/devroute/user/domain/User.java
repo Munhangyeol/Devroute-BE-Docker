@@ -9,10 +9,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -40,13 +37,12 @@ public class User extends BaseTimeEntity {
     @LastModifiedDate
     private LocalDateTime last_password_changed;
 
-    @Enumerated(EnumType.STRING)
-    private LoginType loginType;
+    @Column(name = "login_type")
+    private String loginType;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "role")
-    @ColumnDefault("'ROLE_USER'")
-    private UserRole userRole;
+    @ColumnDefault("'USER'")
+    private String userRole;
 
     @Column(name = "development_field")
     private String developField;
@@ -60,7 +56,7 @@ public class User extends BaseTimeEntity {
     private String goal_info;
 
     @Builder
-    public User(String email, String password, String name, LocalDateTime last_password_changed, LoginType loginType, UserRole userRole, String developField, String introduce_info, String goal_info) {
+    public User(String email, String password, String name, LocalDateTime last_password_changed, String loginType, String userRole, String developField, String introduce_info, String goal_info) {
         this.email = email;
         this.password = password;
         this.name = name;
