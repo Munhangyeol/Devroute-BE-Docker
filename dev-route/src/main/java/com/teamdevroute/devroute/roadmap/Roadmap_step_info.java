@@ -2,6 +2,7 @@ package com.teamdevroute.devroute.roadmap;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.teamdevroute.devroute.company.Company;
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Column;
 import jakarta.persistence.Convert;
