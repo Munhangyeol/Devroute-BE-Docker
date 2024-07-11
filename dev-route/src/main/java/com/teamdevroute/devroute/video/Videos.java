@@ -8,6 +8,7 @@ import jakarta.persistence.Convert;
 import jakarta.persistence.Converter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.IOException;
 import java.util.Map;
@@ -16,11 +17,11 @@ import lombok.Setter;
 
 @Entity
 @Getter
-@Setter
+//@Setter
 public class Videos {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_id")
     private Long id;
     private String url;
