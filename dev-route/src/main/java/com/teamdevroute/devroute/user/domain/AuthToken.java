@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.user;
+package com.teamdevroute.devroute.user.domain;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
