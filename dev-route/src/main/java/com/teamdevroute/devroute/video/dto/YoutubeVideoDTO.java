@@ -11,13 +11,15 @@ public record YoutubeVideoDTO(String url, String title, String thumbnailUrl) {
         this.title = title;
         this.thumbnailUrl = thumbnailUrl;
     }
-    public Videos toEntity(String platform_name,String teck_stack){
+    public Videos toEntity(String platform_name,String teck_stack,Long count,Long rank){
         return Videos.builder()
                 .url(url)
                 .title(title)
                 .thumnail_url(thumbnailUrl)
                 .platform_name(platform_name)
                 .teck_stack(teck_stack)
+                .count(count)
+                .rank(rank)
                 .build();
     }
 }
