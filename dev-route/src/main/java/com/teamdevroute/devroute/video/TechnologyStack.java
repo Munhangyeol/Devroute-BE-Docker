@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.video.domain;
+package com.teamdevroute.devroute.video;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
