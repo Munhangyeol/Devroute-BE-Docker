@@ -6,7 +6,6 @@ import static com.teamdevroute.devroute.video.constans.ApiConstans.QUERY_FRONT_V
 import static com.teamdevroute.devroute.video.constans.ApiConstans.QUERY_MAX_RESULT;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_FRONT_VIDEOID;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_SEARCH;
-import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_SEARCH;
 import static com.teamdevroute.devroute.video.enums.PlatformName.Youtube;
 
 import com.teamdevroute.devroute.video.dto.YouTubeApiResponse;
@@ -19,29 +18,28 @@ import org.springframework.web.client.RestTemplate;
 @Service
 public class VideoService {
     private final VideoRepository videoRepository;
-    private RestTemplate restTemplate;
+    private final RestTemplate restTemplate;
 
     @Value("${youtube.api.key}")
     private String youtubeApiKey;
 
-    private String entireUrl;
-
    private YouTubeApiResponse response;
 
-    public VideoService(VideoRepository videoRepository) {
+    public VideoService(VideoRepository videoRepository, RestTemplate restTemplate) {
         this.videoRepository = videoRepository;
-
+        this.restTemplate = restTemplate;
     }
     public void fetchAndSaveVideo() {
-        restTemplate = new RestTemplate();
+//        restTemplate = new RestTemplate();
         fetchAndSaveYoutubeVideos();
     }
-   private void fetchAndSaveYoutubeVideos() {
+   public void fetchAndSaveYoutubeVideos() {
         for (TechnologyStackName value : TechnologyStackName.values()) {
-            entireUrl = YOUTUBE_API_URL_SEARCH + QUERY_FRONT_VALUE +value + QUERY_FRONT_KEY + youtubeApiKey + QUERY_MAX_RESULT;
-            response = restTemplate.getForObject(entireUrl, YouTubeApiResponse.class);
-            saveYoutubeVideo(response,value);
-        }
+            response = restTemplate.getForObject(getYoutubeApiUrl(value), YouTubeApiResponse.class);
+           if(response!=null) {
+               saveYoutubeVideo(response, value);
+           }
+           }
     }
     private void saveYoutubeVideo(YouTubeApiResponse response, TechnologyStackName teck_stack){
         Long rank= Long.valueOf(0);
@@ -57,5 +55,8 @@ public class VideoService {
             }
         }
 
+    }
+    private String getYoutubeApiUrl(TechnologyStackName value) {
+        return YOUTUBE_API_URL_SEARCH + QUERY_FRONT_VALUE + value + QUERY_FRONT_KEY + youtubeApiKey + QUERY_MAX_RESULT;
     }
 }
