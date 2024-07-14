@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.video.dto;
+package com.teamdevroute.devroute.video.dto.youtube;
 
 import com.teamdevroute.devroute.video.domain.Videos;
 import lombok.Builder;

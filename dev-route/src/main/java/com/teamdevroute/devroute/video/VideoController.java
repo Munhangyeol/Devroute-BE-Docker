@@ -13,8 +13,9 @@ public class VideoController {
     }
     @ResponseBody
     @GetMapping("/fetch-and-save")
-    public String  fetchAndSaveVideo(){
+    public String  fetchAndSaveYoutubeVideo(){
         videoService.fetchAndSaveVideo();
         return "!!";
     }
+
 }
