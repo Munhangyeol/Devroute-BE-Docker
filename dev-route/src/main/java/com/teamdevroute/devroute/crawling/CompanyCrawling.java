@@ -79,9 +79,10 @@ public class CompanyCrawling {
                 enterpriseSalaries.add(data);
             }
 
+            System.out.println("연봉 크기: " + enterpriseSalaries.size());
             // 연봉 리스트의 0, 1은 더미 데이터라 삭제
-            enterpriseSalaries.remove(0);
             enterpriseSalaries.remove(1);
+            enterpriseSalaries.remove(0);
 
         } catch(Exception e){
             e.printStackTrace();
