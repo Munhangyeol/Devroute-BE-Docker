@@ -6,6 +6,10 @@ public final class ApiConstans {
 
     @Value("${youtube.api.url.search}")
     public static String YOUTUBE_API_URL_SEARCH;
+
+    @Value("${udemy.api.url.search}")
+    public static String UDEMY_API_URL_SEARCH="https://www.udemy.com/api-2.0/courses/";
+
     public static String YOUTUBE_API_URL_FRONT_VIDEOID="https://www.youtube.com/watch?v=";
     public static String QUERY_FRONT_VALUE="&q=";
     public static String QUERY_FRONT_KEY = "&key=";
