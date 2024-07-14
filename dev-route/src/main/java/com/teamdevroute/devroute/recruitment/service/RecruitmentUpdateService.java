@@ -26,7 +26,7 @@ public class RecruitmentUpdateService {
 
     @Value("${saramin.access-key}")
     private static String accessKey;
-    private static final String API_URL = "https://oapi.saramin.co.kr/job-search?access-key="+ accessKey+ " &keywords=";
+    private static final String API_URL = "https://oapi.saramin.co.kr/job-search?access-key=" + accessKey + " &keywords=";
 
     private final RecruitmentRepository recruitmentRepository;
     private final CompanyRepository companyRepository;
