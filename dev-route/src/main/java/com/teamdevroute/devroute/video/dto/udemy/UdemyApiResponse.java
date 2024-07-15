@@ -32,6 +32,21 @@ public class UdemyApiResponse {
         public String getImage_125_H() {
             return image_125_H;
         }
+        public void setTitle(String title) {
+            this.title = title;
+        }
+
+        public void setUrl(String url) {
+            this.url = url;
+        }
+
+        public void setPrice(String price) {
+            this.price = price;
+        }
+
+        public void setImage_125_H(String image_125_H) {
+            this.image_125_H = image_125_H;
+        }
 
         // getters and setters
     }

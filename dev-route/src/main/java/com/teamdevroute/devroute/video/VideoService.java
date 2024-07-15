@@ -4,12 +4,16 @@ package com.teamdevroute.devroute.video;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.QUERY_FRONT_KEY;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.QUERY_FRONT_VALUE;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.QUERY_MAX_RESULT;
+import static com.teamdevroute.devroute.video.constans.ApiConstans.QUERY_UDEMY_SET_FEILD;
+import static com.teamdevroute.devroute.video.constans.ApiConstans.UDEMY_API_URL_FRONT_VIDEOID;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.UDEMY_API_URL_SEARCH;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_FRONT_VIDEOID;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_SEARCH;
+import static com.teamdevroute.devroute.video.enums.PlatformName.Udemy;
 import static com.teamdevroute.devroute.video.enums.PlatformName.Youtube;
 
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse;
+import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse.Course;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyVideoDTO;
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse;
 import com.teamdevroute.devroute.video.dto.youtube.YoutubeVideoDTO;
@@ -59,26 +63,23 @@ public class VideoService {
 
     //해당 메서드는 리펙토링 예정입니다!
     public void fetchAndSaveUdemyVideos() {
-//        RestTemplate restTemplate = new RestTemplate();
-        String url = UDEMY_API_URL_SEARCH + "?search=" + "python"+"&fields[course]=title,url,price,image_125_H";;
-
         HttpHeaders headers = new HttpHeaders();
+        setHeaderAuthBeforeFetchUdemyApi(headers);
+        HttpEntity<String> entity = new HttpEntity<>(headers);
+        for(TechnologyStackName value: TechnologyStackName.values()){
+            ResponseEntity<UdemyApiResponse> response = restTemplate.exchange(getUdemyApiUrl(value), HttpMethod.GET, entity, UdemyApiResponse.class);
+            if(response!=null && response.getBody()!=null) {
+                saveUdemyVideo(response.getBody(), value);
+            }
+        }
+    }
+
+    private void setHeaderAuthBeforeFetchUdemyApi(HttpHeaders headers) {
         String auth = udemyApiClientId + ":" + udemyApiKey;
-        System.out.println("clientId: "+udemyApiClientId+udemyApiKey);
         String encodedAuth = Base64.getEncoder().encodeToString(auth.getBytes(StandardCharsets.US_ASCII));
         headers.set("Authorization", "Basic " + encodedAuth);
-
-        HttpEntity<String> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<UdemyApiResponse> response = restTemplate.exchange(url, HttpMethod.GET, entity, UdemyApiResponse.class);
-
-        System.out.println(response.getBody().getResults().stream().map(course -> UdemyVideoDTO.builder()
-                        .url(course.getUrl())
-                        .title(course.getTitle())
-                        .thumbnailUrl(course.getImage_125_H())
-                        .price(Long.valueOf(course.getPrice().replaceAll("[^\\d]", ""))))
-                .collect(Collectors.toList()));
     }
+
     private void saveYoutubeVideo(YouTubeApiResponse response, TechnologyStackName teck_stack){
         Long rank= Long.valueOf(0);
         for (YouTubeApiResponse.Item item : response.getItems()) {
@@ -86,21 +87,37 @@ public class VideoService {
                 continue;
             String videoId = item.getId().getVideoId();
             String videoUrl = YOUTUBE_API_URL_FRONT_VIDEOID+videoId;
-
             String title = item.getSnippet().getTitle();
             String thumbnailUrl = item.getSnippet().getThumbnails().getDefault().getUrl();
             if (videoId != null && title != null && thumbnailUrl != null) {
-//                System.out.println(videoId + " " + videoUrl + " " + thumbnailUrl);
                 videoRepository.save(new YoutubeVideoDTO(videoUrl, title, thumbnailUrl).toEntity(
                         String.valueOf(Youtube), String.valueOf(teck_stack), 0L,++rank));
             }
         }
 
     }
+    private void saveUdemyVideo(UdemyApiResponse response,TechnologyStackName teck_stack){
+        Long rank= Long.valueOf(0);
+        int currentCourseNumber = 0;
+        for (Course course : response.getResults()) {
+            String videoUrl= UDEMY_API_URL_FRONT_VIDEOID+course.getUrl();
+            String title = course.getTitle();
+            String thumnailUrl = course.getImage_125_H();
+            Long price= Long.valueOf(course.getPrice().replaceAll("[^\\d]", ""));
+            videoRepository.save(new UdemyVideoDTO(videoUrl, title, thumnailUrl, price).toEntity(String.valueOf(Udemy),
+                    String.valueOf(teck_stack),0L,++rank));
+            currentCourseNumber += 1;
+            if(currentCourseNumber>=10){
+                break;
+            }
+
+        }
+
+    }
     private String getYoutubeApiUrl(TechnologyStackName value) {
         return YOUTUBE_API_URL_SEARCH + QUERY_FRONT_VALUE + value + QUERY_FRONT_KEY + youtubeApiKey + QUERY_MAX_RESULT;
     }
-//    private String getUdemyAPiUrl(TechnologyStackName value){
-//        return
-//    }
+    private String getUdemyApiUrl(TechnologyStackName value) {
+        return UDEMY_API_URL_SEARCH  + value +QUERY_UDEMY_SET_FEILD;
+    }
 }
