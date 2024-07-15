@@ -17,6 +17,12 @@ public class CrawlingTest {
     @Value("${crawling.link.jobplanet}")
     private String JOBPLANET_URL;
 
+    @Autowired
+    private WebDriverUtil webDriverUtil;
+
+    @Autowired
+    private CompanyCrawlingService companyCrawlingService;
+
     @Test
     void driver_connect() {
         WebDriverUtil webDriverUtil = new WebDriverUtil();
@@ -25,9 +31,9 @@ public class CrawlingTest {
 
     @Test
     void get_thirty_companies() throws InterruptedException {
-        CompanyCrawling crawling = new CompanyCrawling(new WebDriverUtil());
+        CompanyCrawling crawling = new CompanyCrawling(webDriverUtil, companyCrawlingService);
         crawling.getThirtyCompany(1);
-//        crawling.getThirtyCompany(2);
-//        crawling.getThirtyCompany(3);
+        crawling.getThirtyCompany(2);
+        crawling.getThirtyCompany(3);
     }
 }

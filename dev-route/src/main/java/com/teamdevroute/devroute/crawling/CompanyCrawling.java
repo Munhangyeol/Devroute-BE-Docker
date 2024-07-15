@@ -30,8 +30,14 @@ public class CompanyCrawling {
 
     private WebDriverUtil webDriverUtil;
 
-    public CompanyCrawling(WebDriverUtil webDriverUtil) {
+    private CompanyCrawlingService companyCrawlingService;
+
+    public CompanyCrawling() {
+    }
+
+    public CompanyCrawling(WebDriverUtil webDriverUtil, CompanyCrawlingService companyCrawlingService) {
         this.webDriverUtil = webDriverUtil;
+        this.companyCrawlingService = companyCrawlingService;
     }
 
     public void getThirtyCompany(int page) throws InterruptedException {
@@ -90,6 +96,7 @@ public class CompanyCrawling {
             enterpriseSalaries.remove(1);
             enterpriseSalaries.remove(0);
 
+            companyCrawlingService.createCompany(enterpriseNames, enterpriseSalaries, enterpriseGrades);
 
         } catch(Exception e){
             e.printStackTrace();

@@ -20,7 +20,7 @@ public class Company extends BaseTimeEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "logo_url", nullable = false)
+    @Column(name = "logo_url")
     private String logoUrl;
 
     @Column(name = "click_count")
@@ -30,7 +30,7 @@ public class Company extends BaseTimeEntity {
     private double grade;
 
     @Column(name = "average_salary")
-    private int averageSalary;
+    private String averageSalary;
 
     @Column(name = "recruit_count")
     private Long recruitCount;
@@ -39,7 +39,7 @@ public class Company extends BaseTimeEntity {
     private String info;
 
     @Builder
-    public Company(String name, String logoUrl, Long clickCount, double grade, int averageSalary, Long recruitCount, String info) {
+    public Company(String name, String logoUrl, Long clickCount, double grade, String averageSalary, Long recruitCount, String info) {
         this.name = name;
         this.logoUrl = logoUrl;
         this.clickCount = clickCount;
