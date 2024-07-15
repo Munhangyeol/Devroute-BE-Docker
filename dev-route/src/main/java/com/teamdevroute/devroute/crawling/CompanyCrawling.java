@@ -1,6 +1,7 @@
 package com.teamdevroute.devroute.crawling;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 @Component
 public class CompanyCrawling {
 
@@ -53,6 +55,7 @@ public class CompanyCrawling {
         // 상위 10개 기업 이름 및 연봉 가져오기
         List<String> enterpriseNames = new ArrayList<>();
         List<String> enterpriseSalaries = new ArrayList<>();
+        List<String> enterpriseGrades = new ArrayList<>();
 
         // 팝업 제거를 위한 뒤로 갔다 앞으로 오기
         driver.navigate().back();
@@ -78,11 +81,15 @@ public class CompanyCrawling {
                 String data = element.getText();
                 enterpriseSalaries.add(data);
             }
+            for(WebElement element : driver.findElements(By.className("gfvalue"))) {
+                String data = element.getText();
+                enterpriseGrades.add(data);
+            }
 
-            System.out.println("연봉 크기: " + enterpriseSalaries.size());
             // 연봉 리스트의 0, 1은 더미 데이터라 삭제
             enterpriseSalaries.remove(1);
             enterpriseSalaries.remove(0);
+
 
         } catch(Exception e){
             e.printStackTrace();
@@ -90,7 +97,7 @@ public class CompanyCrawling {
 
         // 상위 10개 기업 연봉 및 이름 보기
         for(int i = 0; i<10;i++){
-            System.out.print("이름:" + enterpriseNames.get(i));
+            enterpriseNames.get(i);
             System.out.print(" 연봉: " + enterpriseSalaries.get(i));
         }
 

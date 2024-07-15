@@ -27,7 +27,7 @@ public class CrawlingTest {
     void get_thirty_companies() throws InterruptedException {
         CompanyCrawling crawling = new CompanyCrawling(new WebDriverUtil());
         crawling.getThirtyCompany(1);
-        crawling.getThirtyCompany(2);
-        crawling.getThirtyCompany(3);
+//        crawling.getThirtyCompany(2);
+//        crawling.getThirtyCompany(3);
     }
 }
