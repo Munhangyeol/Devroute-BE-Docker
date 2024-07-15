@@ -26,13 +26,26 @@ public class Company extends BaseTimeEntity {
     @Column(name = "click_count")
     private Long clickCount;
 
-    @OneToOne(mappedBy = "company", cascade = CascadeType.REMOVE)
-    private CompanyInfo companyInfo;
+    @Column(name = "grade")
+    private double grade;
+
+    @Column(name = "average_salary")
+    private int averageSalary;
+
+    @Column(name = "recruit_count")
+    private Long recruitCount;
+
+    @Column(name = "info", columnDefinition = "text")
+    private String info;
 
     @Builder
-    public Company(String name, String logoUrl, Long clickCount) {
+    public Company(String name, String logoUrl, Long clickCount, double grade, int averageSalary, Long recruitCount, String info) {
         this.name = name;
         this.logoUrl = logoUrl;
         this.clickCount = clickCount;
+        this.grade = grade;
+        this.averageSalary = averageSalary;
+        this.recruitCount = recruitCount;
+        this.info = info;
     }
 }
