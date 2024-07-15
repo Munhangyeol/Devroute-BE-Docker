@@ -25,13 +25,13 @@ import java.util.List;
 public class RecruitmentUpdateService {
 
     @Value("${saramin.access-key}")
-    private static String accessKey;
-    private static final String API_URL = "https://oapi.saramin.co.kr/job-search?access-key=" + accessKey + " &keywords=";
+    private String accessKey;
+    private String API_URL = "https://oapi.saramin.co.kr/job-search?access-key=";
 
     private final RecruitmentRepository recruitmentRepository;
     private final CompanyRepository companyRepository;
 
-    @Scheduled(cron = "0 0 0 * * ?") // 매일 자정 업데이트
+    @Scheduled(cron = "0 0 0 * * *", zone = "Asia/Seoul") // 매일 자정 업데이트
     public void fetchJobs() {
         for (SearchKeyWord keyword : SearchKeyWord.values()) {
             fetchAndSaveJobs(keyword.name());
@@ -43,14 +43,13 @@ public class RecruitmentUpdateService {
         RestTemplate restTemplate = new RestTemplate();
         ObjectMapper objectMapper = new ObjectMapper();
 
-        String initialUrl = API_URL + keyword + "&start=0&count=100";
+        String initialUrl = API_URL + accessKey + "&keywords=" + keyword + "&start=0&count=100";
         String initialResponse = restTemplate.getForObject(initialUrl, String.class);
 
         try {
             int total = objectMapper.readTree(initialResponse).path("jobs").path("total").asInt();
-
             for (int i = 0; i <= total / 100; i++) {
-                String url = API_URL + keyword + "&start=" + i + "&count=100";
+                String url = API_URL + accessKey + "&keywords=" + keyword + "&start=" + i + "&count=100";
                 String response = restTemplate.getForObject(url, String.class);
                 JsonNode saraminResponses = objectMapper.readTree(response).path("jobs").path("job");
 

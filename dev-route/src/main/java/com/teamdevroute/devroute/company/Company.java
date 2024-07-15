@@ -24,7 +24,7 @@ public class Company extends BaseTimeEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "logo_url", nullable = false)
+    @Column(name = "logo_url")
     private String logoUrl;
 
     @Column(name = "click_count")
