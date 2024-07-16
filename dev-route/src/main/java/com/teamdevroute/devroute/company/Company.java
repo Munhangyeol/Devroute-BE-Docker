@@ -55,4 +55,9 @@ public class Company extends BaseTimeEntity {
         this.recruitCount = recruitCount;
         this.info = info;
     }
+
+
+    public Company(String companyName, Object o, long l) {
+        super();
+    }
 }

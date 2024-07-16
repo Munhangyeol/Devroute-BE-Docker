@@ -68,6 +68,7 @@ public class VideoService {
         HttpEntity<String> entity = new HttpEntity<>(headers);
         for(TechnologyStackName value: TechnologyStackName.values()){
             ResponseEntity<UdemyApiResponse> response = restTemplate.exchange(getUdemyApiUrl(value), HttpMethod.GET, entity, UdemyApiResponse.class);
+
             if(response!=null && response.getBody()!=null) {
                 saveUdemyVideo(response.getBody(), value);
             }
@@ -104,9 +105,12 @@ public class VideoService {
             String title = course.getTitle();
             String thumnailUrl = course.getImage_125_H();
             Long price= Long.valueOf(course.getPrice().replaceAll("[^\\d]", ""));
-            videoRepository.save(new UdemyVideoDTO(videoUrl, title, thumnailUrl, price).toEntity(String.valueOf(Udemy),
-                    String.valueOf(teck_stack),0L,++rank));
-            currentCourseNumber += 1;
+            if(course.getUrl()!=null && title!=null && thumnailUrl!=null && price!=null) {
+                videoRepository.save(
+                        new UdemyVideoDTO(videoUrl, title, thumnailUrl, price).toEntity(String.valueOf(Udemy),
+                                String.valueOf(teck_stack), 0L, ++rank));
+                currentCourseNumber += 1;
+            }
             if(currentCourseNumber>=10){
                 break;
             }
