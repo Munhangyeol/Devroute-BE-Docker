@@ -57,7 +57,5 @@ public class Company extends BaseTimeEntity {
     }
 
 
-    public Company(String companyName, Object o, long l) {
-        super();
-    }
+
 }

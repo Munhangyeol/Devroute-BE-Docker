@@ -69,7 +69,7 @@ public class VideoServiceTest {
         YouTubeApiResponse response = getMockYouTubeApiResponseWithVideoIdIsNull();
         //When
         when(restTemplate.getForObject(anyString(), eq(YouTubeApiResponse.class))).thenReturn(response);
-        videoService.fetchAndSaveVideo();
+        videoService.fetchAndSaveYoutubeVideos();
         // Then
         //저장이 되면 안됨.
         videoService.fetchAndSaveYoutubeVideos();

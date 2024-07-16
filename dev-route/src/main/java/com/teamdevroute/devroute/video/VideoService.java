@@ -12,15 +12,18 @@ import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_U
 import static com.teamdevroute.devroute.video.enums.PlatformName.Udemy;
 import static com.teamdevroute.devroute.video.enums.PlatformName.Youtube;
 
+import com.teamdevroute.devroute.crawling.InfreanVideoCrawling;
+import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse.Course;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyVideoDTO;
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse;
 import com.teamdevroute.devroute.video.dto.youtube.YoutubeVideoDTO;
 import com.teamdevroute.devroute.video.enums.TechnologyStackName;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.Base64;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -34,6 +37,8 @@ public class VideoService {
     private final VideoRepository videoRepository;
     private final RestTemplate restTemplate;
 
+    private final InfreanVideoCrawling infreanVideoCrawling;
+
     @Value("${youtube.api.key}")
     private String youtubeApiKey;
     @Value("${udemy.api.clientId}")
@@ -43,14 +48,16 @@ public class VideoService {
 
    private YouTubeApiResponse response;
 
-    public VideoService(VideoRepository videoRepository, RestTemplate restTemplate) {
+    public VideoService(VideoRepository videoRepository, RestTemplate restTemplate,
+                        InfreanVideoCrawling infreanVideoCrawling) {
         this.videoRepository = videoRepository;
         this.restTemplate = restTemplate;
+        this.infreanVideoCrawling = infreanVideoCrawling;
     }
-    public void fetchAndSaveVideo() {
-//        restTemplate = new RestTemplate();
+    public void fetchAndSaveVideo() throws IOException {
 //        fetchAndSaveYoutubeVideos();
-        fetchAndSaveUdemyVideos();
+//        fetchAndSaveUdemyVideos();
+        fetchAndSaveInfreanVideos();
     }
    public void fetchAndSaveYoutubeVideos() {
         for (TechnologyStackName value : TechnologyStackName.values()) {
@@ -60,8 +67,6 @@ public class VideoService {
            }
            }
     }
-
-    //해당 메서드는 리펙토링 예정입니다!
     public void fetchAndSaveUdemyVideos() {
         HttpHeaders headers = new HttpHeaders();
         setHeaderAuthBeforeFetchUdemyApi(headers);
@@ -73,6 +78,13 @@ public class VideoService {
                 saveUdemyVideo(response.getBody(), value);
             }
         }
+    }
+    public void fetchAndSaveInfreanVideos() throws IOException {
+        for(TechnologyStackName value: TechnologyStackName.values()){
+            ArrayList<InfreanVideoDTO> infreanVideoDTOS = infreanVideoCrawling.crawlingInfreanVideo(value);
+            saveInfreanVideo(infreanVideoDTOS,value);
+        }
+
     }
 
     private void setHeaderAuthBeforeFetchUdemyApi(HttpHeaders headers) {
@@ -114,6 +126,13 @@ public class VideoService {
             if(currentCourseNumber>=10){
                 break;
             }
+        }
+    }
+    private void saveInfreanVideo(ArrayList<InfreanVideoDTO> infreanVideoDTOS,TechnologyStackName teck_stack){
+        Long rank= Long.valueOf(0);
+        for (InfreanVideoDTO infreanVideoDTO : infreanVideoDTOS) {
+            videoRepository.save(infreanVideoDTO.toEntity("Infrean",
+                    String.valueOf(teck_stack), 0L, rank));
 
         }
 
