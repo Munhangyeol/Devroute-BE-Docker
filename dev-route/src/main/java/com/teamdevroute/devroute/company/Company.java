@@ -1,10 +1,14 @@
 package com.teamdevroute.devroute.company;
 
 import com.teamdevroute.devroute.global.BaseTimeEntity;
+import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,7 +24,7 @@ public class Company extends BaseTimeEntity {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(name = "logo_url", nullable = false)
+    @Column(name = "logo_url")
     private String logoUrl;
 
     @Column(name = "click_count")
@@ -28,6 +32,9 @@ public class Company extends BaseTimeEntity {
 
     @OneToOne(mappedBy = "company", cascade = CascadeType.REMOVE)
     private CompanyInfo companyInfo;
+
+    @OneToMany(mappedBy = "company", cascade = CascadeType.ALL)
+    private List<Recruitment> recruitments = new ArrayList<>();
 
     @Builder
     public Company(String name, String logoUrl, Long clickCount) {

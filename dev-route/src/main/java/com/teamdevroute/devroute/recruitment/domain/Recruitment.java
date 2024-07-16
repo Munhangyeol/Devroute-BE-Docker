@@ -1,5 +1,7 @@
-package com.teamdevroute.devroute.recruitment;
+package com.teamdevroute.devroute.recruitment.domain;
 
+import com.teamdevroute.devroute.company.Company;
+import com.teamdevroute.devroute.recruitment.enums.Source;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -9,6 +11,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -29,11 +32,20 @@ public class Recruitment {
 
     private String url;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "company_id")
+    private Company company;
+
+    @Enumerated(EnumType.STRING)
+    private Source source;
+
     @Builder
-    public Recruitment(List<String> techStacks, String annual, LocalDateTime dueDate, String url) {
+    public Recruitment(List<String> techStacks, String annual, LocalDateTime dueDate, String url, Company company, Source source) {
         this.techStacks = techStacks;
         this.annual = annual;
         this.dueDate = dueDate;
         this.url = url;
+        this.company = company;
+        this.source = source;
     }
 }
