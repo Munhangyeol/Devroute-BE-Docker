@@ -3,10 +3,10 @@ package com.teamdevroute.devroute.recruitment.service;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.teamdevroute.devroute.company.Company;
+import com.teamdevroute.devroute.company.CompanyRepository;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.enums.SearchKeyWord;
 import com.teamdevroute.devroute.recruitment.enums.Source;
-import com.teamdevroute.devroute.recruitment.repository.CompanyRepository;
 import com.teamdevroute.devroute.recruitment.repository.RecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -82,7 +82,12 @@ public class RecruitmentUpdateService {
         String techStacks = jobNode.path("position").path("job-code").path("name").asText();
 
         Company company = companyRepository.findByName(companyName).orElseGet(() -> {
-            Company newCompany = new Company(companyName, null, 0L);
+            Company newCompany = Company.builder()
+                    .name(companyName)
+                    .recruitCount(0L)
+                    .clickCount(0L)
+                    .build();
+
             return companyRepository.save(newCompany);
         });
 

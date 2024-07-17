@@ -1,25 +1,22 @@
 package com.teamdevroute.devroute.video;
 
-import static com.teamdevroute.devroute.video.constans.ApiConstans.UDEMY_API_URL_FRONT_VIDEOID;
-import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_FRONT_VIDEOID;
-import static com.teamdevroute.devroute.video.enums.PlatformName.Infrean;
-import static com.teamdevroute.devroute.video.enums.PlatformName.Udemy;
-import static com.teamdevroute.devroute.video.enums.PlatformName.Youtube;
-
-import com.teamdevroute.devroute.crawling.InfreanVideoCrawling;
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyVideoDTO;
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse;
 import com.teamdevroute.devroute.video.dto.youtube.YoutubeVideoDTO;
 import com.teamdevroute.devroute.video.enums.TechnologyStackName;
-import com.teamdevroute.devroute.video.fetchers.InfreanVideoFetcher;
-import com.teamdevroute.devroute.video.fetchers.UdemyVideoFetcher;
-import com.teamdevroute.devroute.video.fetchers.YoutubeVideoFetcher;
+import com.teamdevroute.devroute.video.fetcher.InfreanVideoFetcher;
+import com.teamdevroute.devroute.video.fetcher.UdemyVideoFetcher;
+import com.teamdevroute.devroute.video.fetcher.YoutubeVideoFetcher;
+import org.springframework.stereotype.Service;
+
 import java.io.IOException;
 import java.util.ArrayList;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+
+import static com.teamdevroute.devroute.video.constans.ApiConstans.UDEMY_API_URL_FRONT_VIDEOID;
+import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_FRONT_VIDEOID;
+import static com.teamdevroute.devroute.video.enums.PlatformName.*;
 
 @Service
 public class VideoService {
@@ -101,6 +98,7 @@ public class VideoService {
             }
         }
     }
+
     private void saveInfreanVideo(ArrayList<InfreanVideoDTO> infreanVideoDTOS, TechnologyStackName techStack) {
         Long rank = 0L;
         for (InfreanVideoDTO infreanVideoDTO : infreanVideoDTOS) {

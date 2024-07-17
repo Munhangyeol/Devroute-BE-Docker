@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.video.fetchers;
+package com.teamdevroute.devroute.video.fetcher;
 
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse;
 import com.teamdevroute.devroute.video.enums.TechnologyStackName;

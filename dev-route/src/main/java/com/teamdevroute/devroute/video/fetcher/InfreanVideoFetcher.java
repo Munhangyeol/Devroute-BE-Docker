@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.video.fetchers;
+package com.teamdevroute.devroute.video.fetcher;
 
 import com.teamdevroute.devroute.crawling.InfreanVideoCrawling;
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
