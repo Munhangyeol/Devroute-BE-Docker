@@ -9,6 +9,9 @@ import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse.Item.Snipp
 
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse.Item.Thumbnails;
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse.Item.Thumbnails.Thumbnail;
+import com.teamdevroute.devroute.video.enums.TechnologyStackName;
+import com.teamdevroute.devroute.video.fetcher.UdemyVideoFetcher;
+import com.teamdevroute.devroute.video.fetcher.YoutubeVideoFetcher;
 import io.restassured.http.Method;
 import javax.annotation.meta.When;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,10 +34,8 @@ import java.util.Collections;
 
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
-
 @ExtendWith(MockitoExtension.class)
 public class VideoServiceTest {
-
     @InjectMocks
     private VideoService videoService;
 
@@ -43,6 +44,11 @@ public class VideoServiceTest {
 
     @Mock
     private RestTemplate restTemplate;
+
+    @Mock
+    private YoutubeVideoFetcher youtubeVideoFetcher;
+    @Mock
+    private UdemyVideoFetcher udemyVideoFetcher;
 
     @BeforeEach
     public void setUp() {
@@ -55,7 +61,7 @@ public class VideoServiceTest {
         // Given
         YouTubeApiResponse response = getMockYouTubeApiResponse();
         //When
-        when(restTemplate.getForObject(anyString(), eq(YouTubeApiResponse.class))).thenReturn(response);
+        when(youtubeVideoFetcher.fetchYoutubeVideos(anyString())).thenReturn(response);
         // Then
         videoService.fetchAndSaveYoutubeVideos();
         //Tehcnology stack name이 총 9개임으로 9번 호출 되는 것이 맞음.
@@ -67,12 +73,10 @@ public class VideoServiceTest {
     public void testFetchAndSaveYoutubeVideosWithVideoIdIsNull() {
         // Given
         YouTubeApiResponse response = getMockYouTubeApiResponseWithVideoIdIsNull();
-        //When
-        when(restTemplate.getForObject(anyString(), eq(YouTubeApiResponse.class))).thenReturn(response);
-        videoService.fetchAndSaveYoutubeVideos();
+        when(youtubeVideoFetcher.fetchYoutubeVideos(anyString())).thenReturn(response);
         // Then
-        //저장이 되면 안됨.
         videoService.fetchAndSaveYoutubeVideos();
+        //Tehcnology stack name이 총 9개임으로 9번 호출 되는 것이 맞음.
         verify(videoRepository, times(0)).save(any());
     }
     @DisplayName("가짜 유데미 비디오 객체를 생성하여,Fetch하고 Save하는 과정이 9번 진행되나 테스트한다.")
@@ -80,15 +84,8 @@ public class VideoServiceTest {
     public void testFetchAndSaveUdmeyVideos() {
         // Given
         UdemyApiResponse response = getMockUdemyApiResponse();
-        ResponseEntity<UdemyApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-        HttpEntity<String> entity = Mockito.mock(HttpEntity.class);
         //When
-        when(restTemplate.exchange(
-                anyString(),
-                eq(HttpMethod.GET),
-                any(HttpEntity.class),
-                eq(UdemyApiResponse.class)))
-                .thenReturn(responseEntity);
+        when(udemyVideoFetcher.fetchUdemyVideos(anyString())).thenReturn(response);
         // Then
         videoService.fetchAndSaveUdemyVideos();
         //Tehcnology stack name이 총 9개임으로 9번 호출 되는 것이 맞음.
@@ -100,18 +97,11 @@ public class VideoServiceTest {
     public void testFetchAndSaveUdemyVideosWithUrlIsNull() {
         // Given
         UdemyApiResponse response = getMockUdemyApiResponseWithUrlIsNull();
-        ResponseEntity<UdemyApiResponse> responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
-        HttpEntity<String> entity = Mockito.mock(HttpEntity.class);
         //When
-        when(restTemplate.exchange(
-                anyString(),
-                eq(HttpMethod.GET),
-                any(HttpEntity.class),
-                eq(UdemyApiResponse.class)))
-                .thenReturn(responseEntity);
+        when(udemyVideoFetcher.fetchUdemyVideos(anyString())).thenReturn(response);
         // Then
         videoService.fetchAndSaveUdemyVideos();
-        //저장이 되면 안됨.
+        //Tehcnology stack name이 총 9개임으로 9번 호출 되는 것이 맞음.
         verify(videoRepository, times(0)).save(any());
     }
 
@@ -119,7 +109,7 @@ public class VideoServiceTest {
 
     //가짜 YoububeApiResponse를 가져온다.
     private YouTubeApiResponse getMockYouTubeApiResponse() {
-        ReflectionTestUtils.setField(videoService, "youtubeApiKey", "fakeApiKey");
+//        ReflectionTestUtils.setField(videoService, "youtubeApiKey", "fakeApiKey");
         Item item = new Item();
         setYoutubeItem(item);
         YouTubeApiResponse response = new YouTubeApiResponse();
@@ -127,7 +117,7 @@ public class VideoServiceTest {
         return response;
     }
     private YouTubeApiResponse getMockYouTubeApiResponseWithVideoIdIsNull() {
-        ReflectionTestUtils.setField(videoService, "youtubeApiKey", "fakeApiKey");
+//        ReflectionTestUtils.setField(videoService, "youtubeApiKey", "fakeApiKey");
         Item item = new Item();
         setYoutubeItemWithVideoIdIsNull(item);
         YouTubeApiResponse response = new YouTubeApiResponse();
@@ -135,8 +125,8 @@ public class VideoServiceTest {
         return response;
     }
     private UdemyApiResponse getMockUdemyApiResponse() {
-        ReflectionTestUtils.setField(videoService, "udemyApiClientId", "fakeApiClientId");
-        ReflectionTestUtils.setField(videoService, "udemyApiKey", "fakeApiKey");
+//        ReflectionTestUtils.setField(videoService, "udemyApiClientId", "fakeApiClientId");
+//        ReflectionTestUtils.setField(videoService, "udemyApiKey", "fakeApiKey");
         Course course = new Course();
         setUdemyCourse(course);
         UdemyApiResponse response = new UdemyApiResponse();
@@ -144,8 +134,8 @@ public class VideoServiceTest {
         return response;
     }
     private UdemyApiResponse getMockUdemyApiResponseWithUrlIsNull() {
-        ReflectionTestUtils.setField(videoService, "udemyApiClientId", "fakeApiClientId");
-        ReflectionTestUtils.setField(videoService, "udemyApiKey", "fakeApiKey");
+//        ReflectionTestUtils.setField(videoService, "udemyApiClientId", "fakeApiClientId");
+//        ReflectionTestUtils.setField(videoService, "udemyApiKey", "fakeApiKey");
         Course course = new Course();
         setUdemyCourseWithUrlIsNull(course);
         UdemyApiResponse response = new UdemyApiResponse();

@@ -22,7 +22,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class InfreanVideoCrawling {
 
-    public ArrayList<InfreanVideoDTO> crawlingInfreanVideo(TechnologyStackName teck_stack){
+    public ArrayList<InfreanVideoDTO> crawlingInfreanVideo(String teck_stack){
         WebDriver driver = getWebDriver(teck_stack);
         ArrayList result = new ArrayList<InfreanVideoDTO>();
         try {
@@ -100,7 +100,7 @@ public class InfreanVideoCrawling {
             return lectures;
     }
 
-    private WebDriver getWebDriver(TechnologyStackName teck_stack) {
+    private WebDriver getWebDriver(String teck_stack) {
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);

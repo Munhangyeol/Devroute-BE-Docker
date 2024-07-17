@@ -35,14 +35,14 @@ public class VideoService {
     }
 
     public void fetchAndSaveVideo() throws IOException {
-//        fetchAndSaveYoutubeVideos();
-//        fetchAndSaveUdemyVideos();
+        fetchAndSaveYoutubeVideos();
+        fetchAndSaveUdemyVideos();
         fetchAndSaveInfreanVideos();
     }
 
     public void fetchAndSaveYoutubeVideos() {
         for (TechnologyStackName value : TechnologyStackName.values()) {
-            YouTubeApiResponse response = youtubeVideoFetcher.fetchYoutubeVideos(value);
+            YouTubeApiResponse response = youtubeVideoFetcher.fetchYoutubeVideos(String.valueOf(value));
             if (response != null) {
                 saveYoutubeVideo(response, value);
             }
@@ -51,7 +51,7 @@ public class VideoService {
 
     public void fetchAndSaveUdemyVideos() {
         for (TechnologyStackName value : TechnologyStackName.values()) {
-            UdemyApiResponse response = udemyVideoFetcher.fetchUdemyVideos(value);
+            UdemyApiResponse response = udemyVideoFetcher.fetchUdemyVideos(String.valueOf(value));
             if (response != null) {
                 saveUdemyVideo(response, value);
             }
@@ -60,7 +60,7 @@ public class VideoService {
 
     public void fetchAndSaveInfreanVideos() throws IOException {
         for (TechnologyStackName value : TechnologyStackName.values()) {
-            ArrayList<InfreanVideoDTO> infreanVideoDTOS = infreanVideoFetcher.fetchInfreanVideos(value);
+            ArrayList<InfreanVideoDTO> infreanVideoDTOS = infreanVideoFetcher.fetchInfreanVideos(String.valueOf(value));
             saveInfreanVideo(infreanVideoDTOS, value);
         }
     }
@@ -87,7 +87,8 @@ public class VideoService {
             String videoUrl = UDEMY_API_URL_FRONT_VIDEOID + course.getUrl();
             String title = course.getTitle();
             String thumbnailUrl = course.getImage_125_H();
-            Long price = Long.valueOf(course.getPrice().replaceAll("[^\\d]", ""));
+            Long price = course.getPrice().replaceAll("[^\\d]", "")==""? 0L
+            : Long.valueOf(course.getPrice().replaceAll("[^\\d]", ""));
             if (course.getUrl() != null && title != null && thumbnailUrl != null && price != null) {
                 videoRepository.save(new UdemyVideoDTO(videoUrl, title, thumbnailUrl, price).toEntity(
                         String.valueOf(Udemy), String.valueOf(techStack), 0L, ++rank));
