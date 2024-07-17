@@ -31,7 +31,7 @@ public class Company extends BaseTimeEntity {
     private Long clickCount;
 
     @Column(name = "grade")
-    private double grade;
+    private Double grade;
 
     @Column(name = "average_salary")
     private String averageSalary;
@@ -46,7 +46,7 @@ public class Company extends BaseTimeEntity {
     private List<Recruitment> recruitments = new ArrayList<>();
 
     @Builder
-    public Company(String name, String logoUrl, Long clickCount, double grade, String averageSalary, Long recruitCount, String info) {
+    public Company(String name, String logoUrl, Long clickCount, Double grade, String averageSalary, Long recruitCount, String info) {
         this.name = name;
         this.logoUrl = logoUrl;
         this.clickCount = clickCount;
