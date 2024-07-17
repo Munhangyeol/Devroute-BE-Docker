@@ -55,4 +55,6 @@ public class Company extends BaseTimeEntity {
         this.recruitCount = recruitCount;
         this.info = info;
     }
+
+
 }

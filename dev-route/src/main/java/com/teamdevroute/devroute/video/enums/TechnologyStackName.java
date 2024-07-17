@@ -2,6 +2,6 @@ package com.teamdevroute.devroute.video.enums;
 
 public enum TechnologyStackName {
 
-    htmlcss,python,java,javascript,spring,Nodejs,React,Vuejs,Angular,
+    htmlcss,python,java,javascript,spring,nodejs,react,Vuejs,Angular,
 
 }

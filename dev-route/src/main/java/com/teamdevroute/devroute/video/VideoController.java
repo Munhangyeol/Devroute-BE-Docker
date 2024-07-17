@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.video;
 
+import java.io.IOException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,7 +14,7 @@ public class VideoController {
     }
     @ResponseBody
     @GetMapping("/fetch-and-save")
-    public String  fetchAndSaveYoutubeVideo(){
+    public String  fetchAndSaveYoutubeVideo() throws IOException {
         videoService.fetchAndSaveVideo();
         return "!!";
     }
