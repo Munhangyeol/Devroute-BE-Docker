@@ -35,8 +35,8 @@ public class VideoService {
     }
 
     public void fetchAndSaveVideo() throws IOException {
-        fetchAndSaveYoutubeVideos();
-        fetchAndSaveUdemyVideos();
+//        fetchAndSaveYoutubeVideos();
+//        fetchAndSaveUdemyVideos();
         fetchAndSaveInfreanVideos();
     }
 

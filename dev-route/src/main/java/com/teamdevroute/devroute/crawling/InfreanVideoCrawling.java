@@ -39,9 +39,10 @@ public class InfreanVideoCrawling {
                     // 강의 URL 추출
                     String lectureUrl = getUrl(lecture, "a", "href", "No URL");
                     // 강의 제목 추출
-                    String title=lecture.getText().split("\n")[0];
+                    String title = getTitle(lecture.getText());
                     // 가격 추출
-                    String price=lecture.getText().split("\n")[2];
+                    String price=getPrice(lecture.getText());
+
                     // 결과 출력
                     InfreanVideoDTO infreanVideoDTO = new InfreanVideoDTO(lectureUrl,title,thumbnailUrl,Long.valueOf(price.replaceAll("[^\\d]", "")));
                     result.add(infreanVideoDTO);
@@ -65,14 +66,38 @@ public class InfreanVideoCrawling {
         String thumbnailUrl = thumbnailElement != null ? thumbnailElement.getAttribute(src) : x;
         return thumbnailUrl;
     }
+    private String getPrice(String lectureText) {
+        // 가격은 "원"이 마지막에 있고, 숫자로 변환했을 때, 숫자 인것만 반환함
+        String[] lines = lectureText.split("\n");
+        for (String line : lines) {
+            if (line.trim().endsWith("원")&&line.replaceAll("[^\\d]", "")!="") {
+                return line.replaceAll("[^\\d]", "");
+            }
+        }
+        return "0";
+    }
+    private String getTitle(String lectureText){
+        String[] lines = lectureText.split("\n");
+        for (String line : lines) {
+            if (line.charAt(0) == '할' && line.charAt(1) == '인') {
+                return lines[1];
+            } else {
+                return line;
+            }
+        }
+        return "0";
+    }
+
+
 
     private List<WebElement> getLectures(WebDriver driver) {
         // 페이지가 로드될 때까지 잠시 대기 (필요에 따라 조정)
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul.css-y21pja li.mantine-1avyp1d")));
-        // 강의 목록 요소를 선택
-        List<WebElement> lectures = driver.findElements(By.cssSelector("ul.css-y21pja li.mantine-1avyp1d"));
-        return lectures;
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("ul.css-y21pja li.mantine-1avyp1d")));
+            // 강의 목록 요소를 선택
+            List<WebElement> lectures = driver.findElements(By.cssSelector("ul.css-y21pja li.mantine-1avyp1d"));
+
+            return lectures;
     }
 
     private WebDriver getWebDriver(TechnologyStackName teck_stack) {

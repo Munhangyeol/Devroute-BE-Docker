@@ -24,8 +24,10 @@ public class Videos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "video_id")
     private Long id;
+    @Column(length = 2048)
     private String url;
     private String title;
+    @Column(length = 2048)
     private String thumnail_url;
     private Long price;
     @Column(name = "video_rank")
