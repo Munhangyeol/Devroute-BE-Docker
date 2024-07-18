@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public final class ApiConstans {
-//    @Value("${youtube.api.url.search}")
+
     public static String YOUTUBE_API_URL_SEARCH="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video";
 
 //    @Value("${udemy.api.url.search}")

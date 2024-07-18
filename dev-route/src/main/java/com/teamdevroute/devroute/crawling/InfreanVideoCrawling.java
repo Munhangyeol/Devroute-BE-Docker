@@ -34,7 +34,6 @@ public class InfreanVideoCrawling {
                     break;
                 }
                 try {
-//                    System.out.println(lecture.getText());
                     String thumbnailUrl = getUrl(lecture, "div.mantine-AspectRatio-root img", "src", "No image");
                     // 강의 URL 추출
                     String lectureUrl = getUrl(lecture, "a", "href", "No URL");
@@ -42,7 +41,6 @@ public class InfreanVideoCrawling {
                     String title = getTitle(lecture.getText());
                     // 가격 추출
                     String price=getPrice(lecture.getText());
-
                     // 결과 출력
                     InfreanVideoDTO infreanVideoDTO = new InfreanVideoDTO(lectureUrl,title,thumbnailUrl,Long.valueOf(price.replaceAll("[^\\d]", "")));
                     result.add(infreanVideoDTO);
