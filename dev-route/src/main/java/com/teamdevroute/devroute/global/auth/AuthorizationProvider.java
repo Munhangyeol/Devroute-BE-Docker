@@ -1,8 +1,14 @@
 package com.teamdevroute.devroute.global.auth;
 
+import io.jsonwebtoken.Claims;
+
 public interface AuthorizationProvider {
 
-    UserCredential create(UserAuthContext user);
+    String create(LoginUserInfo context);
 
-    UserAuthContext parseCredential(UserCredential token);
+    Claims parseClaims(String token);
+
+    boolean validateToken(String token);
+
+    public Long getUserId(String token);
 }
