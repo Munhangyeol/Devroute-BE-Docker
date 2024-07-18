@@ -18,11 +18,12 @@ public class YoutubeVideoFetcher {
         this.restTemplate = restTemplate;
     }
 
-    public YouTubeApiResponse fetchYoutubeVideos(TechnologyStackName value) {
+    public YouTubeApiResponse fetchYoutubeVideos(String value) {
+        System.out.println(getYoutubeApiUrl(value));
         return restTemplate.getForObject(getYoutubeApiUrl(value), YouTubeApiResponse.class);
     }
 
-    private String getYoutubeApiUrl(TechnologyStackName value) {
+    private String getYoutubeApiUrl(String value) {
         return YOUTUBE_API_URL_SEARCH + QUERY_FRONT_VALUE + value + QUERY_FRONT_KEY + youtubeApiKey + QUERY_MAX_RESULT;
     }
 }
