@@ -1,28 +1,51 @@
 package com.teamdevroute.devroute.user;
 
-import com.teamdevroute.devroute.global.auth.UserAuthContext;
+import com.teamdevroute.devroute.global.auth.LoginUserInfo;
+import com.teamdevroute.devroute.global.auth.jwt.JwtUtils;
+import com.teamdevroute.devroute.global.exception.UserNotFoundException;
 import com.teamdevroute.devroute.user.domain.User;
 import com.teamdevroute.devroute.user.dto.UserCreateRequest;
 import com.teamdevroute.devroute.user.dto.UserCreateResponse;
 import com.teamdevroute.devroute.user.enums.LoginType;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
+@Transactional(readOnly = true)
+@Slf4j
 public class UserService {
-    private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
+    private final JwtUtils jwtUtils;
+    private final PasswordEncoder encoder;
 
     public UserCreateResponse createUser(UserCreateRequest request) {
         User user = userRepository.save(request.toEntity(LoginType.NORMAL.name()));
         return UserCreateResponse.of(user);
     }
 
-    public UserAuthContext loginByEmailAndPassword(UserLoginRequest loginRequest) {
-        User user = userRepository.findByEmailAndPassword(loginRequest.email(), loginRequest.password())
-                .orElseThrow(() -> new IllegalArgumentException("로그인 정보가 올바르지 않습니다."));
-        return new UserAuthContext(user.getName(), user.getUserRole());
+    public String login(UserLoginRequest request) {
+        String email = request.getEmail();
+        String password = request.getPassword();
+
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+
+        if(!encoder.matches(password, user.getPassword())){
+            throw new BadCredentialsException("비밀번호가 일치하지 않습니다.");
+        }
+
+        LoginUserInfo loginUserInfo = LoginUserInfo.builder()
+                .id(user.getId())
+                .role(user.getUserRole())
+                .name(user.getName())
+                .email(user.getEmail())
+                .password(encoder.encode(user.getPassword()))
+                .build();
+
+        return jwtUtils.create(loginUserInfo);
     }
 }
