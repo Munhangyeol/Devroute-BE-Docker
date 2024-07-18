@@ -15,13 +15,19 @@ public class CompanyCrawlingService {
         this.companyRepository = companyRepository;
     }
 
-    public void createCompany(List<String> enterpriseNames, List<String> enterpriseSalaries, List<String> enterpriseGrades) {
+    public void createCompany(
+            List<String> enterpriseNames,
+            List<String> enterpriseSalaries,
+            List<String> enterpriseGrades,
+            List<String> enterpriseLogos
+    ) {
         for(int i=0;i<enterpriseNames.size();i++) {
             companyRepository.save(
                     Company.builder()
                     .name(enterpriseNames.get(i))
                     .averageSalary(enterpriseSalaries.get(i))
                     .grade(Double.parseDouble(enterpriseGrades.get(i)))
+                    .logoUrl(enterpriseLogos.get(i))
                     .build()
             );
         }
