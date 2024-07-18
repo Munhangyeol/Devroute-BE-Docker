@@ -1,6 +1,5 @@
 package com.teamdevroute.devroute.crawling;
 
-import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
@@ -9,24 +8,18 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import java.time.Duration;
-import java.util.concurrent.TimeUnit;
-
 @Slf4j
 @Component
 public class CompanyCrawling {
 
-    private static String JOBPLANET_URL = "https://www.jobplanet.co.kr/companies?industry_id=700&_rs_act=industries&_rs_con=gnb&_rs_element=category";
-    private static String JOBPLANET_PAGE_2_URL = "https://www.jobplanet.co.kr/companies?industry_id=700&page=2";
-    private static String JOBPLANET_PAGE_3_URL = "https://www.jobplanet.co.kr/companies?industry_id=700&page=3";
+    private final static String JOBPLANET_URL = "https://www.jobplanet.co.kr/companies?industry_id=700&_rs_act=industries&_rs_con=gnb&_rs_element=category";
+    private final static String JOBPLANET_PAGE_2_URL = "https://www.jobplanet.co.kr/companies?industry_id=700&page=2";
+    private final static String JOBPLANET_PAGE_3_URL = "https://www.jobplanet.co.kr/companies?industry_id=700&page=3";
 
     private WebDriverUtil webDriverUtil;
 
@@ -40,7 +33,7 @@ public class CompanyCrawling {
         this.companyCrawlingService = companyCrawlingService;
     }
 
-    public void getThirtyCompany(int page) throws InterruptedException {
+    public void getThirtyCompany(int page) {
         String URL = switch (page) {
             case 2 -> JOBPLANET_PAGE_2_URL;
             case 3 -> JOBPLANET_PAGE_3_URL;
@@ -62,6 +55,7 @@ public class CompanyCrawling {
         List<String> enterpriseNames = new ArrayList<>();
         List<String> enterpriseSalaries = new ArrayList<>();
         List<String> enterpriseGrades = new ArrayList<>();
+        List<String> enterpriseLogo = new ArrayList<>();
 
         // 팝업 제거를 위한 뒤로 갔다 앞으로 오기
         driver.navigate().back();
@@ -91,21 +85,18 @@ public class CompanyCrawling {
                 String data = element.getText();
                 enterpriseGrades.add(data);
             }
+            for(WebElement element: driver.findElements(By.className("llogo"))){
+                enterpriseLogo.add(element.findElement(By.tagName("img")).getAttribute("src"));
+            }
 
             // 연봉 리스트의 0, 1은 더미 데이터라 삭제
             enterpriseSalaries.remove(1);
             enterpriseSalaries.remove(0);
 
-            companyCrawlingService.createCompany(enterpriseNames, enterpriseSalaries, enterpriseGrades);
+            companyCrawlingService.createCompany(enterpriseNames, enterpriseSalaries, enterpriseGrades, enterpriseLogo);
 
         } catch(Exception e){
             e.printStackTrace();
-        }
-
-        // 상위 10개 기업 연봉 및 이름 보기
-        for(int i = 0; i<10;i++){
-            enterpriseNames.get(i);
-            System.out.print(" 연봉: " + enterpriseSalaries.get(i));
         }
 
         webDriverUtil.closeChromeDriver();
