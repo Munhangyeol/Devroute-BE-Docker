@@ -19,7 +19,7 @@ public class YoutubeVideoFetcher {
     }
 
     public YouTubeApiResponse fetchYoutubeVideos(String value) {
-        System.out.println(getYoutubeApiUrl(value));
+//        System.out.println(getYoutubeApiUrl(value));
         return restTemplate.getForObject(getYoutubeApiUrl(value), YouTubeApiResponse.class);
     }
 
