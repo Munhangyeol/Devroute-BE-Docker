@@ -1,5 +1,7 @@
 package com.teamdevroute.devroute.video;
 
+import com.teamdevroute.devroute.video.domain.Videos;
+import com.teamdevroute.devroute.video.dto.LectureResponseDTO;
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyVideoDTO;
@@ -15,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.teamdevroute.devroute.video.constans.ApiConstans.UDEMY_API_URL_FRONT_VIDEOID;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_FRONT_VIDEOID;
@@ -116,5 +120,12 @@ public class VideoService {
             videoRepository.save(infreanVideoDTO.toEntity(String.valueOf(Infrean),
                     String.valueOf(techStack), 0L, ++rank));
         }
+    }
+    public List<LectureResponseDTO> findLectureListByPlatformNameAndTechStack(
+            String platformName,String techStack){
+        List<Videos> videos = videoRepository.findByPlatformNameAndTeckStack(platformName, techStack);
+        return videos.stream()
+                .map(video -> new LectureResponseDTO(video.getUrl(), video.getTitle(), video.getThumnail_url(),video.getPrice(), video.getPlatformName()))
+                .collect(Collectors.toList());
     }
 }

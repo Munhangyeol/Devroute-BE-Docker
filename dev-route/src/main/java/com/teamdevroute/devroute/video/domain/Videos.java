@@ -32,9 +32,9 @@ public class Videos {
     private Long price;
     @Column(name = "video_rank")
     private Long rank;
-    private String platform_name;
+    private String platformName;
     private Long count;
-    private String teck_stack;
+    private String teckStack;
     public Videos(){
     }
     @Builder
@@ -45,9 +45,9 @@ public class Videos {
         this.thumnail_url = thumnail_url;
         this.price = price;
         this.rank = rank;
-        this.platform_name=platform_name;
+        this.platformName=platform_name;
         this.count=count;
-        this.teck_stack = teck_stack;
+        this.teckStack = teck_stack;
 
     }
 
