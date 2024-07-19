@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Dev-Route-BE">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/dev-route/src/main/java" />
+      <root url="file://$PROJECT_DIR$/dev-route/src/test/java" />
+    </SOURCES>
+  </library>
+</component>
