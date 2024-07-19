@@ -5,6 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3c0b60f2-4e0c-44bf-a1b0-661051855cb2" name="변경" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/0e0a122a-d951-4bca-97cc-fece45ac70a0.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/a1b7670d-b32d-4d86-b74f-c21669e97951.vsidx" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/b080e4f7-60d3-4ed5-88bc-1ac3adc35c8e.vsidx" beforeDir="false" />
@@ -12,6 +13,18 @@
       <change beforePath="$PROJECT_DIR$/.idea/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.vs/slnx.sqlite" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+=======
+      <change afterPath="$PROJECT_DIR$/.idea/libraries/Dev_Route_BE.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dev-Route-BE.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dev-route/src/main/java/com/teamdevroute/devroute/DataLoader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev-route/src/main/java/com/teamdevroute/devroute/crawling/CompanyCrawling.java" beforeDir="false" afterPath="$PROJECT_DIR$/dev-route/src/main/java/com/teamdevroute/devroute/crawling/CompanyCrawling.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev-route/src/main/java/com/teamdevroute/devroute/crawling/CompanyCrawlingService.java" beforeDir="false" afterPath="$PROJECT_DIR$/dev-route/src/main/java/com/teamdevroute/devroute/crawling/CompanyCrawlingService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dev-route/src/test/java/com/teamdevroute/devroute/crawling/CrawlingTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/dev-route/src/test/java/com/teamdevroute/devroute/crawling/CrawlingTest.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,6 +93,7 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
+<<<<<<< Updated upstream
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Gradle.Build dev-route.executor&quot;: &quot;Run&quot;,
@@ -104,17 +118,47 @@
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+=======
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.com.teamdevroute.devroute.DevRouteApplication.executor": "Run",
+    "Gradle.Build dev-route.executor": "Run",
+    "Gradle.dev-route [:DevRouteApplication.main()].executor": "Run",
+    "Gradle.dev-route [copySecret].executor": "Run",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Spring Boot.DevRouteApplication.executor": "Run",
+    "git-widget-placeholder": "main",
+    "jdk.selected.JAVA_MODULE": "17",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/mhg10/OneDrive/바탕 화면/2024/스프링/Dev-Route-BE/dev-route/build.gradle",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.17",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "preferences.fileTypes",
+    "vue.rearranger.settings.migration": "true"
+>>>>>>> Stashed changes
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mhg10\OneDrive\바탕 화면\2024\스프링\Dev-Route-BE\dev-route\src\main\java\com\teamdevroute\devroute\video\dto\udemy" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.dev-route [copySecret]">
+  <component name="RunManager" selected="Application.com.teamdevroute.devroute.DevRouteApplication">
     <configuration name="com.teamdevroute.devroute.DevRouteApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.teamdevroute.devroute.DevRouteApplication" />
-      <module name="dev-route.main" />
+      <module name="Dev-Route-BE" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.teamdevroute.devroute.video.domain.*" />
@@ -193,22 +237,13 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="Dev-Route-BE" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="Dev-Route-BE" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="DevRouteApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UpdateClassesAndResources" />
+<<<<<<< Updated upstream
       <module name="dev-route.main" />
+=======
+      <module name="Dev-Route-BE" />
+>>>>>>> Stashed changes
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.teamdevroute.devroute.DevRouteApplication" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -216,6 +251,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.com.teamdevroute.devroute.DevRouteApplication" />
         <item itemvalue="Gradle.dev-route [copySecret]" />
         <item itemvalue="JUnit.VideoServiceTest" />
         <item itemvalue="JUnit.VideoServiceTest.testFetchAndSaveUdmeyVideos" />
@@ -245,7 +281,21 @@
       <workItem from="1721318559878" duration="186000" />
       <workItem from="1721318759131" duration="117000" />
       <workItem from="1721357229427" duration="2732000" />
+<<<<<<< Updated upstream
       <workItem from="1721367743446" duration="16000" />
+=======
+      <workItem from="1721361605474" duration="223000" />
+      <workItem from="1721362603698" duration="1612000" />
+      <workItem from="1721364233716" duration="23000" />
+      <workItem from="1721364276287" duration="56000" />
+      <workItem from="1721364562366" duration="40000" />
+      <workItem from="1721364619993" duration="132000" />
+      <workItem from="1721364810175" duration="749000" />
+      <workItem from="1721365576161" duration="228000" />
+      <workItem from="1721365815497" duration="326000" />
+      <workItem from="1721366150381" duration="189000" />
+      <workItem from="1721366349579" duration="93000" />
+>>>>>>> Stashed changes
     </task>
     <servers />
   </component>
@@ -262,5 +312,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>
