@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="3c0b60f2-4e0c-44bf-a1b0-661051855cb2" name="변경" comment="" />
+    <list default="true" id="3c0b60f2-4e0c-44bf-a1b0-661051855cb2" name="변경" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/0e0a122a-d951-4bca-97cc-fece45ac70a0.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/a1b7670d-b32d-4d86-b74f-c21669e97951.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/b080e4f7-60d3-4ed5-88bc-1ac3adc35c8e.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.vs/.idea/FileContentIndex/fc18c99c-814c-47f3-91fc-cfefd83026b5.vsidx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.vs/slnx.sqlite" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.vs/slnx.sqlite" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -46,7 +54,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/backend-submodule" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="HighlightingSettingsPerFile">
     <setting file="file://$PROJECT_DIR$/dev-route/src/main/java/com/teamdevroute/devroute/crawling/CompanyCrawling.java" root0="FORCE_HIGHLIGHTING" />
@@ -72,38 +80,38 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Build dev-route.executor": "Run",
-    "Gradle.dev-route [copySecret].executor": "Run",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Spring Boot.DevRouteApplication.executor": "Run",
-    "git-widget-placeholder": "main",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/mhg10/OneDrive/바탕 화면/2024/스프링/Dev-Route-BE",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "모듈",
-    "project.structure.proportion": "0.17",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "reference.settingsdialog.project.gradle",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Build dev-route.executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.dev-route [copySecret].executor&quot;: &quot;Run&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Spring Boot.DevRouteApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/mhg10/OneDrive/바탕 화면/2024/스프링/Dev-Route-BE&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;모듈&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.project.gradle&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\mhg10\OneDrive\바탕 화면\2024\스프링\Dev-Route-BE\dev-route\src\main\java\com\teamdevroute\devroute\video\dto\udemy" />
     </key>
   </component>
-  <component name="RunManager" selected="Spring Boot.DevRouteApplication">
+  <component name="RunManager" selected="Gradle.dev-route [copySecret]">
     <configuration name="com.teamdevroute.devroute.DevRouteApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.teamdevroute.devroute.DevRouteApplication" />
       <module name="dev-route.main" />
@@ -136,7 +144,6 @@
       <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
       <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
       <DebugAllEnabled>false</DebugAllEnabled>
-      <RunAsTest>false</RunAsTest>
       <method v="2" />
     </configuration>
     <configuration name="VideoServiceTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
@@ -182,6 +189,19 @@
       <option name="MAIN_CLASS_NAME" value="com.teamdevroute.devroute.video.VideoServiceTest" />
       <option name="METHOD_NAME" value="testFetchAndSaveYoutubeVideos" />
       <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Dev-Route-BE" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="Dev-Route-BE" />
+      <option name="filePath" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
