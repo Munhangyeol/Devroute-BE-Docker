@@ -27,7 +27,7 @@ public class UdemyVideoFetcher {
         this.restTemplate = restTemplate;
     }
 
-    public UdemyApiResponse fetchUdemyVideos(TechnologyStackName value) {
+    public UdemyApiResponse fetchUdemyVideos(String value) {
         HttpHeaders headers = new HttpHeaders();
         setHeaderAuthBeforeFetchUdemyApi(headers);
         HttpEntity<String> entity = new HttpEntity<>(headers);
@@ -40,7 +40,7 @@ public class UdemyVideoFetcher {
         headers.set("Authorization", "Basic " + encodedAuth);
     }
 
-    private String getUdemyApiUrl(TechnologyStackName value) {
+    private String getUdemyApiUrl(String value) {
         return UDEMY_API_URL_SEARCH + value + QUERY_UDEMY_SET_FEILD;
     }
 }
