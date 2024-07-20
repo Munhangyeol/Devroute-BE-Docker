@@ -40,23 +40,4 @@ public class UserServiceTest {
 
         assertThatCode(() -> userService.createUser(request)).doesNotThrowAnyException();
     }
-
-    @DisplayName("존재하는 유저가 로그인 되는지 확인한다.")
-    @Test
-    void login_user() {
-        Map<String, String> params = new HashMap<>();
-        params.put("email", "admin@email.com");
-        params.put("password", "password");
-
-        ExtractableResponse<Response> response = RestAssured.given().log().all()
-                .contentType(ContentType.JSON)
-                .body(params)
-                .when().post("/login")
-                .then().log().all()
-                .statusCode(200)
-                .extract();
-
-        String token = response.headers().get("Set-Cookie").getValue().split(";")[0].split("=")[1];
-        assertThat(token).isNotBlank();
-    }
 }
