@@ -59,7 +59,7 @@ tasks.named('test') {
 processResources.dependsOn('copySecret')
 
 tasks.register('copySecret', Copy) {
-	from '../backend-submodule/application*.properties'
+	from '../backend-submodule/application-secret.properties'
 	into 'src/main/resources'
 }
 

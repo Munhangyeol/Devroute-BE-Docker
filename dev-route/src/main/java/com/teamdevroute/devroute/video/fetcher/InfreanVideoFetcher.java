@@ -16,7 +16,7 @@ public class InfreanVideoFetcher {
         this.infreanVideoCrawling = infreanVideoCrawling;
     }
 
-    public ArrayList<InfreanVideoDTO> fetchInfreanVideos(TechnologyStackName value) throws IOException {
+    public ArrayList<InfreanVideoDTO> fetchInfreanVideos(String value) throws IOException {
         return infreanVideoCrawling.crawlingInfreanVideo(value);
     }
 }

@@ -6,6 +6,8 @@ import com.teamdevroute.devroute.user.dto.UserCreateResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -30,16 +32,16 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public void login(
-            @RequestBody UserLoginRequest loginRequest,
-            HttpServletResponse response
+    public ResponseEntity<String> login(
+            @RequestBody UserLoginRequest loginRequest
     ) {
         String token = userService.login(loginRequest);
+
         log.info("토큰: " + token);
-        Cookie cookie = new Cookie("token", token);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-        response.addCookie(cookie);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+
+        return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
     }
 
     @GetMapping("/auth/kakao")
