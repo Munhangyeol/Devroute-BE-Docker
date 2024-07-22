@@ -42,6 +42,8 @@ public class InfreanVideoCrawling {
                     // 가격 추출
                     String price=getPrice(lecture.getText());
                     // 결과 출력
+                    log.info("InfreanCrawling result: " + "thumnail: " + thumbnailUrl + " url: " + lectureUrl +
+                            " title: " + title + " price: " + price);
                     InfreanVideoDTO infreanVideoDTO = new InfreanVideoDTO(lectureUrl,title,thumbnailUrl,Long.valueOf(price.replaceAll("[^\\d]", "")));
                     result.add(infreanVideoDTO);
                 } catch (org.openqa.selenium.NoSuchElementException e) {

@@ -1,5 +1,7 @@
 package com.teamdevroute.devroute.video;
 
+import com.teamdevroute.devroute.video.domain.Videos;
+import com.teamdevroute.devroute.video.dto.LectureResponseDTO;
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyVideoDTO;
@@ -9,22 +11,28 @@ import com.teamdevroute.devroute.video.enums.TechnologyStackName;
 import com.teamdevroute.devroute.video.fetcher.InfreanVideoFetcher;
 import com.teamdevroute.devroute.video.fetcher.UdemyVideoFetcher;
 import com.teamdevroute.devroute.video.fetcher.YoutubeVideoFetcher;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import static com.teamdevroute.devroute.video.constans.ApiConstans.UDEMY_API_URL_FRONT_VIDEOID;
 import static com.teamdevroute.devroute.video.constans.ApiConstans.YOUTUBE_API_URL_FRONT_VIDEOID;
 import static com.teamdevroute.devroute.video.enums.PlatformName.*;
 
 @Service
+@Slf4j
 public class VideoService {
 
     private final VideoRepository videoRepository;
     private final YoutubeVideoFetcher youtubeVideoFetcher;
     private final UdemyVideoFetcher udemyVideoFetcher;
     private final InfreanVideoFetcher infreanVideoFetcher;
+
 
     public VideoService(VideoRepository videoRepository, YoutubeVideoFetcher youtubeVideoFetcher,
                         UdemyVideoFetcher udemyVideoFetcher, InfreanVideoFetcher infreanVideoFetcher) {
@@ -34,6 +42,8 @@ public class VideoService {
         this.infreanVideoFetcher = infreanVideoFetcher;
     }
 
+    //매주 토요일에 실행
+    @Scheduled(cron = "* * * * * 6",zone = "Asia/Seoul")
     public void fetchAndSaveVideo() throws IOException {
         fetchAndSaveYoutubeVideos();
         fetchAndSaveUdemyVideos();
@@ -73,6 +83,8 @@ public class VideoService {
             String videoUrl = YOUTUBE_API_URL_FRONT_VIDEOID + videoId;
             String title = item.getSnippet().getTitle();
             String thumbnailUrl = item.getSnippet().getThumbnails().getDefault().getUrl();
+            log.info("YoutubeFetching result: " + "thumnail: " + thumbnailUrl + " url: " + videoUrl +
+                    " title: " + title);
             if (videoId != null && title != null && thumbnailUrl != null) {
                 videoRepository.save(new YoutubeVideoDTO(videoUrl, title, thumbnailUrl).toEntity(
                         String.valueOf(Youtube), String.valueOf(techStack), 0L, ++rank));
@@ -89,6 +101,8 @@ public class VideoService {
             String thumbnailUrl = course.getImage_125_H();
             Long price = course.getPrice().replaceAll("[^\\d]", "")==""? 0L
             : Long.valueOf(course.getPrice().replaceAll("[^\\d]", ""));
+            log.info("UdemyFetching result: " + "thumnail: " + thumbnailUrl + " url: " + videoUrl +
+                    " title: " + title+" price: "+price);
             if (course.getUrl() != null && title != null && thumbnailUrl != null && price != null) {
                 videoRepository.save(new UdemyVideoDTO(videoUrl, title, thumbnailUrl, price).toEntity(
                         String.valueOf(Udemy), String.valueOf(techStack), 0L, ++rank));
@@ -106,5 +120,12 @@ public class VideoService {
             videoRepository.save(infreanVideoDTO.toEntity(String.valueOf(Infrean),
                     String.valueOf(techStack), 0L, ++rank));
         }
+    }
+    public List<LectureResponseDTO> findLectureListByPlatformNameAndTechStack(
+            String platformName,String techStack){
+        List<Videos> videos = videoRepository.findByPlatformNameAndTeckStack(platformName, techStack);
+        return videos.stream()
+                .map(video -> new LectureResponseDTO(video.getUrl(), video.getTitle(), video.getThumnail_url(),video.getPrice(), video.getPlatformName()))
+                .collect(Collectors.toList());
     }
 }
