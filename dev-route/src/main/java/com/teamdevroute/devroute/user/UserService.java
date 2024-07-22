@@ -1,5 +1,7 @@
 package com.teamdevroute.devroute.user;
 
+import com.teamdevroute.devroute.global.auth.Oauth2Util;
+import com.teamdevroute.devroute.global.auth.ELoginProvider;
 import com.teamdevroute.devroute.global.auth.LoginUserInfo;
 import com.teamdevroute.devroute.global.auth.jwt.JwtUtils;
 import com.teamdevroute.devroute.global.exception.UserNotFoundException;
@@ -22,6 +24,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtUtils jwtUtils;
     private final PasswordEncoder encoder;
+    private final Oauth2Util oauth2Util;
 
     public UserCreateResponse createUser(UserCreateRequest request) {
         User user = userRepository.save(request.toEntity(LoginType.NORMAL.name()));
@@ -48,4 +51,21 @@ public class UserService {
 
         return jwtUtils.create(loginUserInfo);
     }
+
+    public String getAccessToken(String authorizationCode, ELoginProvider ELoginProvider){
+        String accessToken = null;
+        switch (ELoginProvider) {
+            case KAKAO -> {
+                accessToken = oauth2Util.getKakaoAccessToken(authorizationCode);
+            }
+//            case GOOGLE -> {
+//                accessToken = oauth2Util.getGoogleAccessToken(authorizationCode);
+//            }
+//            case NAVER -> {
+//                accessToken = authorizationCode;
+//            }
+        }
+        return accessToken;
+    }
+
 }
