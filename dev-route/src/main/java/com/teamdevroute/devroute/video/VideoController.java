@@ -21,7 +21,7 @@ public class VideoController {
     @GetMapping("/fetch-and-save")
     public String  fetchAndSaveYoutubeVideo() throws IOException {
         videoService.fetchAndSaveVideo();
-        return "!!";
+        return "Successfull FetchAndSave Videos!!";
     }
 
     @ResponseBody

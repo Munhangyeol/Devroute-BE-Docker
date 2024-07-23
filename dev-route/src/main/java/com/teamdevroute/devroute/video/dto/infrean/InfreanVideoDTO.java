@@ -2,6 +2,8 @@ package com.teamdevroute.devroute.video.dto.infrean;
 
 import com.teamdevroute.devroute.video.domain.Videos;
 import lombok.Builder;
+import lombok.Getter;
+
 
 public record InfreanVideoDTO(String url, String title, String thumbnailUrl,Long price) {
     @Builder
