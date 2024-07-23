@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.video;
 
+import com.teamdevroute.devroute.video.Repository.VideoRepository;
 import com.teamdevroute.devroute.video.domain.Videos;
 import com.teamdevroute.devroute.video.dto.LectureResponseDTO;
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
