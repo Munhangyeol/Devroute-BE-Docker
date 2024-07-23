@@ -3,9 +3,18 @@ package com.teamdevroute.devroute.global.auth;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.teamdevroute.devroute.user.dto.UserAuthResponse;
+import com.teamdevroute.devroute.user.dto.UserCreateResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -24,57 +33,72 @@ public class Oauth2Util {
     @Value("${kakao.redirect_uri}")
     private String kakaoRedirectUri;
 
-    public String getKakaoAccessToken(String code) {
-        String accessToken = "";
-        String refreshToken = "";
-        String reqUrl = "https://kauth.kakao.com/oauth/token";
+    private String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
+    private String KAKAO_USERINFO_URL = "https://kapi.kakao.com/v2/user/me";
+    private String KAKAO_AUTHORIZATION_URL = "https://kauth.kakao.com/oauth/authorize";
 
-        try{
-            URL url = new URL(reqUrl);
-            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    private static final RestTemplate restTemplate = new RestTemplate();
 
-            //필수 헤더 세팅
-            conn.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-            conn.setDoOutput(true); //OutputStream으로 POST 데이터를 넘겨주겠다는 옵션.
+    public String getKakaoRedirectUrl() {
+        String KAKAO_AUTHORIZATION_URL = "https://kauth.kakao.com/oauth/authorize";
 
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-            StringBuilder sb = new StringBuilder();
-
-            //필수 쿼리 파라미터 세팅
-            sb.append("grant_type=authorization_code");
-            sb.append("&client_id=").append(kakaoApiKey);
-            sb.append("&redirect_uri=").append(kakaoRedirectUri);
-            sb.append("&code=").append(code);
-
-            bw.write(sb.toString());
-            bw.flush();
-
-            int responseCode = conn.getResponseCode();
-
-            BufferedReader br;
-            if (responseCode >= 200 && responseCode < 300) {
-                br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            } else {
-                br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
-            }
-
-            String line = "";
-            StringBuilder responseSb = new StringBuilder();
-            while((line = br.readLine()) != null){
-                responseSb.append(line);
-            }
-            String result = responseSb.toString();
-
-            JsonElement element = JsonParser.parseString(result);
-            JsonObject jsonObject = element.getAsJsonObject();
-            accessToken = jsonObject.get("access_token").getAsString();
-            refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
-
-            br.close();
-            bw.close();
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-        return accessToken;
+        String url = KAKAO_AUTHORIZATION_URL
+                + "?client_id=" + kakaoApiKey
+                + "&redirect_uri=" + kakaoRedirectUri
+                + "&response_type=code";
+        return url;
     }
+
+    public String getKakaoAccessToken(String authorizationCode) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", kakaoApiKey);
+        params.add("redirect_uri", kakaoRedirectUri);
+        params.add("code", authorizationCode);
+
+        HttpEntity<MultiValueMap<String,String>> kakaoTokenRequest = new HttpEntity<>(params,httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                KAKAO_TOKEN_URL,
+                HttpMethod.POST,
+                kakaoTokenRequest,
+                String.class
+        );
+
+        return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
+    }
+
+    public UserAuthResponse getKakaoUserInformation(String accessToken) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.add("Authorization", "Bearer "+ accessToken);
+        httpHeaders.add("Content-type","application/x-www-form-urlencoded;charset=utf-8");
+
+        HttpEntity<MultiValueMap<String,String >> kakaoProfileRequest= new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                KAKAO_USERINFO_URL,
+                HttpMethod.POST,
+                kakaoProfileRequest,
+                String.class
+        );
+
+        // 토큰을 사용하여 사용자 정보 추출
+        JsonObject responseBody = JsonParser.parseString(response.getBody()).getAsJsonObject();
+        JsonObject properties = responseBody.getAsJsonObject("properties");
+        JsonObject kakaoAccount = responseBody.getAsJsonObject("kakao_account");
+
+        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+        String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
+
+        return UserAuthResponse.builder()
+                .name(nickname)
+                .email(email)
+                .build();
+    }
+
+
 }

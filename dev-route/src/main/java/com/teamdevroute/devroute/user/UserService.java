@@ -1,11 +1,11 @@
 package com.teamdevroute.devroute.user;
 
 import com.teamdevroute.devroute.global.auth.Oauth2Util;
-import com.teamdevroute.devroute.global.auth.ELoginProvider;
 import com.teamdevroute.devroute.global.auth.LoginUserInfo;
 import com.teamdevroute.devroute.global.auth.jwt.JwtUtils;
 import com.teamdevroute.devroute.global.exception.UserNotFoundException;
 import com.teamdevroute.devroute.user.domain.User;
+import com.teamdevroute.devroute.user.dto.UserAuthResponse;
 import com.teamdevroute.devroute.user.dto.UserCreateRequest;
 import com.teamdevroute.devroute.user.dto.UserCreateResponse;
 import com.teamdevroute.devroute.user.enums.LoginType;
@@ -16,9 +16,13 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
+import static com.teamdevroute.devroute.user.enums.LoginType.*;
+
 @Service
 @RequiredArgsConstructor
-@Transactional(readOnly = true)
+@Transactional
 @Slf4j
 public class UserService {
     private final UserRepository userRepository;
@@ -52,9 +56,25 @@ public class UserService {
         return jwtUtils.create(loginUserInfo);
     }
 
-    public String getAccessToken(String authorizationCode, ELoginProvider ELoginProvider){
+
+    public String getRedirectUrl(LoginType loginType) {
+        switch (loginType) {
+            case KAKAO -> {
+                return oauth2Util.getKakaoRedirectUrl();
+            }
+//            case GOOGLE -> {
+//                return oauth2Util.getGoogleRedirectUrl();
+//            }
+//            case NAVER -> {
+//                return oauth2Util.getAppleRedirectUrl();
+//            }
+        }
+        return null;
+    }
+
+    public String getAccessToken(String authorizationCode, LoginType loginType){
         String accessToken = null;
-        switch (ELoginProvider) {
+        switch (loginType) {
             case KAKAO -> {
                 accessToken = oauth2Util.getKakaoAccessToken(authorizationCode);
             }
@@ -66,6 +86,46 @@ public class UserService {
 //            }
         }
         return accessToken;
+    }
+
+    public String authLogin(String accessToken, LoginType loginType) {
+        UserAuthResponse userAuthResponse = null;
+        switch (loginType) {
+            case KAKAO -> {
+                userAuthResponse = oauth2Util.getKakaoUserInformation(accessToken);
+            }
+//            case GOOGLE -> {
+//                userCreateResponse = oauth2Util.getGoogleUserInformation(accessToken);
+//            }
+//            case NAVER -> {
+//                userCreateResponse = oauth2Util.getNAVERUserInformation(accessToken);
+//            }
+        }
+
+        Optional<User> findUser = userRepository.findByEmail(userAuthResponse.email());
+        User user;
+        if(findUser.isEmpty()){
+            User createdUser = User.builder()
+                    .email(userAuthResponse.email())
+                    .name(userAuthResponse.name())
+                    .userRole("USER")
+                    .loginType("KAKAO")
+                    .build();
+
+            user = userRepository.save(createdUser);
+        }
+        else{
+            user = findUser.get();
+        }
+
+        LoginUserInfo loginUserInfo = LoginUserInfo.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .role(user.getUserRole())
+                .name(user.getName())
+                .build();
+
+        return jwtUtils.create(loginUserInfo);
     }
 
 }
