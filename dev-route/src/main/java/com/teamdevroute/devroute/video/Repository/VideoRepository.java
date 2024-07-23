@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.video;
+package com.teamdevroute.devroute.video.Repository;
 
 import com.teamdevroute.devroute.video.domain.Videos;
 import org.springframework.data.jpa.repository.JpaRepository;

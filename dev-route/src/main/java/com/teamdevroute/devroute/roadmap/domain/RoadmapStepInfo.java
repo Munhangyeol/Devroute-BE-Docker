@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.roadmap;
+package com.teamdevroute.devroute.roadmap.domain;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

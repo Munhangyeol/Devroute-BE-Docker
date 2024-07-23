@@ -5,6 +5,7 @@ import lombok.Builder;
 public record LectureResponseDTO(String url, String title, String thumnail_url,
                                  Long price, String platform_name) {
 
+    @Builder
     public LectureResponseDTO(String url, String title, String thumnail_url,
                               Long price, String platform_name){
         this.url = url;

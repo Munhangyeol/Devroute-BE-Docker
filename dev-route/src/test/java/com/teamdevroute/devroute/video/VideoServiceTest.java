@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.video;
 
+import com.teamdevroute.devroute.video.Repository.VideoRepository;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse;
 import com.teamdevroute.devroute.video.dto.udemy.UdemyApiResponse.Course;
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse;
@@ -9,25 +10,15 @@ import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse.Item.Snipp
 
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse.Item.Thumbnails;
 import com.teamdevroute.devroute.video.dto.youtube.YouTubeApiResponse.Item.Thumbnails.Thumbnail;
-import com.teamdevroute.devroute.video.enums.TechnologyStackName;
 import com.teamdevroute.devroute.video.fetcher.UdemyVideoFetcher;
 import com.teamdevroute.devroute.video.fetcher.YoutubeVideoFetcher;
-import io.restassured.http.Method;
-import javax.annotation.meta.When;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Collections;

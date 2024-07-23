@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.roadmap;
+package com.teamdevroute.devroute.roadmap.domain;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

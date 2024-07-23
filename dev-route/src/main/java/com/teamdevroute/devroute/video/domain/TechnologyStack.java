@@ -5,10 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+
 @Entity
 @Getter
-//@Setter
+@Setter
 public class TechnologyStack {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -17,10 +20,16 @@ public class TechnologyStack {
     private String name;
     private Long count;
 
+    @Builder
+    public TechnologyStack(String name, Long count) {
+        this.name = name;
+        this.count = count;
+    }
+
     public TechnologyStack() {
     }
 
-    public Long getAddedCount() {
-        return count + 1;
+    public void setAddedCount() {
+        this.count = this.count + 1;
     }
 }
