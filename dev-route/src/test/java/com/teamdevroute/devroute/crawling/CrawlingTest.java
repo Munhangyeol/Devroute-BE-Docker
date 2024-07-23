@@ -1,9 +1,16 @@
 package com.teamdevroute.devroute.crawling;
 
+import com.teamdevroute.devroute.crawling.dto.CrawledRecruitmentDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 public class CrawlingTest {
@@ -29,5 +36,14 @@ public class CrawlingTest {
         crawling.getThirtyCompany(1);
         crawling.getThirtyCompany(2);
         crawling.getThirtyCompany(3);
+    }
+
+    @Test
+    void get_recruitment() {
+        List<String> companyNames = new ArrayList<>(Arrays.asList("삼성"));
+
+        RecruitmentCrawling recruitmentCrawling = new RecruitmentCrawling(webDriverUtil);
+        List<CrawledRecruitmentDto> dtoList = recruitmentCrawling.crawlingJUMPIT(companyNames);
+        assertThat(dtoList.size()).isEqualTo(10);
     }
 }
