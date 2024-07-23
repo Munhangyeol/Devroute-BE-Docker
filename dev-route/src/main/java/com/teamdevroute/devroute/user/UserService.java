@@ -62,9 +62,9 @@ public class UserService {
             case KAKAO -> {
                 return oauth2Util.getKakaoRedirectUrl();
             }
-//            case GOOGLE -> {
-//                return oauth2Util.getGoogleRedirectUrl();
-//            }
+            case GOOGLE -> {
+                return oauth2Util.getGoogleRedirectUrl();
+            }
 //            case NAVER -> {
 //                return oauth2Util.getAppleRedirectUrl();
 //            }
@@ -78,9 +78,9 @@ public class UserService {
             case KAKAO -> {
                 accessToken = oauth2Util.getKakaoAccessToken(authorizationCode);
             }
-//            case GOOGLE -> {
-//                accessToken = oauth2Util.getGoogleAccessToken(authorizationCode);
-//            }
+            case GOOGLE -> {
+                accessToken = oauth2Util.getGoogleAccessToken(authorizationCode);
+            }
 //            case NAVER -> {
 //                accessToken = authorizationCode;
 //            }
@@ -94,9 +94,9 @@ public class UserService {
             case KAKAO -> {
                 userAuthResponse = oauth2Util.getKakaoUserInformation(accessToken);
             }
-//            case GOOGLE -> {
-//                userCreateResponse = oauth2Util.getGoogleUserInformation(accessToken);
-//            }
+            case GOOGLE -> {
+                userAuthResponse = oauth2Util.getGoogleUserInformation(accessToken);
+            }
 //            case NAVER -> {
 //                userCreateResponse = oauth2Util.getNAVERUserInformation(accessToken);
 //            }
@@ -109,7 +109,7 @@ public class UserService {
                     .email(userAuthResponse.email())
                     .name(userAuthResponse.name())
                     .userRole("USER")
-                    .loginType("KAKAO")
+                    .loginType(loginType.toString())
                     .build();
 
             user = userRepository.save(createdUser);

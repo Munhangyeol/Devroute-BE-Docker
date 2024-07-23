@@ -42,7 +42,12 @@ public class UserController {
     @GetMapping("/auth/kakao")
     public ResponseEntity getKakaoRedirectUrl() {
         String url = userService.getRedirectUrl(LoginType.KAKAO);
-//        map.put("url", userService.getRedirectUrl(LoginType.KAKAO));
+        return new ResponseEntity<>(url, HttpStatus.OK);
+    }
+
+    @GetMapping("/auth/google")
+    public ResponseEntity getGoogleRedirectUrl() {
+        String url = userService.getRedirectUrl(LoginType.GOOGLE);
         return new ResponseEntity<>(url, HttpStatus.OK);
     }
 
@@ -50,8 +55,19 @@ public class UserController {
     public ResponseEntity<String> kakaoCallback(@RequestParam("code") String code) {
         // accesstoken 받기
         String accessToken = userService.getAccessToken(code, LoginType.KAKAO);
-        //
+
         String token = userService.authLogin(accessToken, LoginType.KAKAO);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/auth/google/callback")
+    public ResponseEntity<String> googleCallback(@RequestParam("code") String code) {
+        // accesstoken 받기
+        String accessToken = userService.getAccessToken(code, LoginType.GOOGLE);
+
+        String token = userService.authLogin(accessToken, LoginType.GOOGLE);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
         return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
