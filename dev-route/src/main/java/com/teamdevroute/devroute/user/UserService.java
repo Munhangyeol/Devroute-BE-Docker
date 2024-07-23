@@ -65,14 +65,14 @@ public class UserService {
             case GOOGLE -> {
                 return oauth2Util.getGoogleRedirectUrl();
             }
-//            case NAVER -> {
-//                return oauth2Util.getAppleRedirectUrl();
-//            }
+            case NAVER -> {
+                return oauth2Util.getNaverRedirectUrl();
+            }
         }
         return null;
     }
 
-    public String getAccessToken(String authorizationCode, LoginType loginType){
+    public String getAccessToken(String authorizationCode, LoginType loginType, String state){
         String accessToken = null;
         switch (loginType) {
             case KAKAO -> {
@@ -81,9 +81,9 @@ public class UserService {
             case GOOGLE -> {
                 accessToken = oauth2Util.getGoogleAccessToken(authorizationCode);
             }
-//            case NAVER -> {
-//                accessToken = authorizationCode;
-//            }
+            case NAVER -> {
+                accessToken = oauth2Util.getNaverAccessToken(authorizationCode, state);
+            }
         }
         return accessToken;
     }
@@ -97,9 +97,9 @@ public class UserService {
             case GOOGLE -> {
                 userAuthResponse = oauth2Util.getGoogleUserInformation(accessToken);
             }
-//            case NAVER -> {
-//                userCreateResponse = oauth2Util.getNAVERUserInformation(accessToken);
-//            }
+            case NAVER -> {
+                userAuthResponse = oauth2Util.getNaverUserInformation(accessToken);
+            }
         }
 
         Optional<User> findUser = userRepository.findByEmail(userAuthResponse.email());

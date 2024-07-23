@@ -36,7 +36,7 @@ public class UserController {
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
 
-        return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
+        return new ResponseEntity<>("유저가 로그인되었습니다.", headers, HttpStatus.OK);
     }
 
     @GetMapping("/auth/kakao")
@@ -51,25 +51,36 @@ public class UserController {
         return new ResponseEntity<>(url, HttpStatus.OK);
     }
 
+    @GetMapping("/auth/naver")
+    public ResponseEntity getNaverRedirectUrl() {
+        String url = userService.getRedirectUrl(LoginType.NAVER);
+        return new ResponseEntity<>(url, HttpStatus.OK);
+    }
+
     @GetMapping("/auth/kakao/callback")
     public ResponseEntity<String> kakaoCallback(@RequestParam("code") String code) {
-        // accesstoken 받기
-        String accessToken = userService.getAccessToken(code, LoginType.KAKAO);
-
+        String accessToken = userService.getAccessToken(code, LoginType.KAKAO, null);
         String token = userService.authLogin(accessToken, LoginType.KAKAO);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
-        return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
+        return new ResponseEntity<>("유저가 로그인되었습니다.", headers, HttpStatus.OK);
     }
 
     @GetMapping("/auth/google/callback")
     public ResponseEntity<String> googleCallback(@RequestParam("code") String code) {
-        // accesstoken 받기
-        String accessToken = userService.getAccessToken(code, LoginType.GOOGLE);
-
+        String accessToken = userService.getAccessToken(code, LoginType.GOOGLE, null);
         String token = userService.authLogin(accessToken, LoginType.GOOGLE);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Authorization", "Bearer " + token);
-        return new ResponseEntity<>("유저가 로그인되었습니다.",headers, HttpStatus.OK);
+        return new ResponseEntity<>("유저가 로그인되었습니다.", headers, HttpStatus.OK);
+    }
+
+    @GetMapping("/auth/naver/callback")
+    public ResponseEntity<String> naverCallback(@RequestParam("code") String code, @RequestParam("state") String state) {
+        String accessToken = userService.getAccessToken(code, LoginType.NAVER, state);
+        String token = userService.authLogin(accessToken, LoginType.NAVER);
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "Bearer " + token);
+        return new ResponseEntity<>("유저가 로그인되었습니다.", headers, HttpStatus.OK);
     }
 }

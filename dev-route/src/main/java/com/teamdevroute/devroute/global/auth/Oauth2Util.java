@@ -15,8 +15,8 @@ import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.math.BigInteger;
+import java.security.SecureRandom;
 
 @Component
 @RequiredArgsConstructor
@@ -47,23 +47,44 @@ public class Oauth2Util {
     private final String GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo";
     private final String GOOGLE_AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/v2/auth";
 
+    // naver
+    @Value("${naver.client.id}")
+    private String NAVER_CLIENT_ID;
+
+    @Value("${naver.redirect.uri}")
+    private String NAVER_REDIRECT_URL;
+
+    @Value("${naver.client.secret}")
+    private String NAVER_CLIENT_SECRET;
+
+    private final String NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
+    private final String NAVER_USERINFO_URL = "https://openapi.naver.com/v1/nid/me";
+    private final String NAVER_AUTHORIZATION_URL = "https://nid.naver.com/oauth2.0/authorize";
+
+
     private static final RestTemplate restTemplate = new RestTemplate();
 
     public String getKakaoRedirectUrl() {
-        String url = KAKAO_AUTHORIZATION_URL
+        return KAKAO_AUTHORIZATION_URL
                 + "?client_id=" + KAKAO_API_KEY
                 + "&redirect_uri=" + KAKAO_REDIRECT_URI
                 + "&response_type=code";
-        return url;
     }
 
     public String getGoogleRedirectUrl() {
-        String url = GOOGLE_AUTHORIZATION_URL
+        return GOOGLE_AUTHORIZATION_URL
                 + "?client_id=" + GOOGLE_CLIENT_ID
                 + "&redirect_uri=" + GOOGLE_REDIRECT_URL
-                + "&response_type=code&scope=email%20profile%20openid" +
-                "&access_type=offline";
-        return url;
+                + "&response_type=code&scope=email%20profile%20openid"
+                + "&access_type=offline";
+    }
+
+    public String getNaverRedirectUrl() {
+        return NAVER_AUTHORIZATION_URL
+                + "?client_id=" + NAVER_CLIENT_ID
+                + "&redirect_uri=" + NAVER_REDIRECT_URL
+                + "&response_type=code"
+                + "&state" + generateState();
     }
 
     public String getKakaoAccessToken(String authorizationCode) {
@@ -111,6 +132,29 @@ public class Oauth2Util {
         return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
     }
 
+    public String getNaverAccessToken(String authorizationCode, String state) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
+        params.add("grant_type", "authorization_code");
+        params.add("client_id", NAVER_CLIENT_ID);
+        params.add("client_secret", NAVER_CLIENT_SECRET);
+        params.add("code", authorizationCode);
+        params.add("state", state);
+
+        HttpEntity<MultiValueMap<String, String>> naverTokenRequest = new HttpEntity<>(params, httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                NAVER_TOKEN_URL,
+                HttpMethod.POST,
+                naverTokenRequest,
+                String.class
+        );
+
+        return JsonParser.parseString(response.getBody()).getAsJsonObject().get("access_token").getAsString();
+    }
+
     public UserAuthResponse getKakaoUserInformation(String accessToken) {
         HttpHeaders httpHeaders = new HttpHeaders();
 
@@ -125,23 +169,20 @@ public class Oauth2Util {
                 kakaoProfileRequest,
                 String.class
         );
-
-        // 토큰을 사용하여 사용자 정보 추출
-        JsonObject responseBody = JsonParser.parseString(response.getBody()).getAsJsonObject();
+        Gson gson = new Gson();
+        JsonObject responseBody = gson.fromJson(response.getBody(), JsonObject.class);
         JsonObject properties = responseBody.getAsJsonObject("properties");
         JsonObject kakaoAccount = responseBody.getAsJsonObject("kakao_account");
 
-        String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-        String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-
         return UserAuthResponse.builder()
-                .name(nickname)
-                .email(email)
+                .name(properties.get("nickname").getAsString())
+                .email(kakaoAccount.get("email").getAsString())
                 .build();
     }
 
     public UserAuthResponse getGoogleUserInformation(String accessToken) {
         HttpHeaders httpHeaders = new HttpHeaders();
+
         httpHeaders.add("Authorization", "Bearer " + accessToken);
         httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
 
@@ -155,11 +196,41 @@ public class Oauth2Util {
         );
 
         Gson gson = new Gson();
-        JsonObject jsonObject = gson.fromJson(response.getBody(), JsonObject.class);
+        JsonObject responseBody = gson.fromJson(response.getBody(), JsonObject.class);
 
         return UserAuthResponse.builder()
-                .name(jsonObject.get("name").getAsString())
-                .email(jsonObject.get("email").getAsString())
+                .name(responseBody.get("name").getAsString())
+                .email(responseBody.get("email").getAsString())
                 .build();
+    }
+
+    public UserAuthResponse getNaverUserInformation(String accessToken) {
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        httpHeaders.add("Authorization", "Bearer " + accessToken);
+        httpHeaders.add("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+        HttpEntity<MultiValueMap<String, String>> naverProfileRequest = new HttpEntity<>(httpHeaders);
+
+        ResponseEntity<String> response = restTemplate.exchange(
+                NAVER_USERINFO_URL,
+                HttpMethod.GET,
+                naverProfileRequest,
+                String.class
+        );
+
+        Gson gson = new Gson();
+        JsonObject responseBody = gson.fromJson(response.getBody(), JsonObject.class);
+        JsonObject responseDetails = responseBody.getAsJsonObject("response");
+
+        return UserAuthResponse.builder()
+                .name(responseDetails.get("name").getAsString())
+                .email(responseDetails.get("email").getAsString())
+                .build();
+    }
+
+    private String generateState() {
+        SecureRandom random = new SecureRandom();
+        return new BigInteger(130, random).toString(32);
     }
 }
