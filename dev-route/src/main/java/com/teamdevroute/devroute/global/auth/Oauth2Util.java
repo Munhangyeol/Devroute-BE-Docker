@@ -29,9 +29,14 @@ public class Oauth2Util {
     @Value("${kakao.redirect_uri}")
     private String KAKAO_REDIRECT_URI;
 
-    private final String KAKAO_TOKEN_URL = "https://kauth.kakao.com/oauth/token";
-    private final String KAKAO_USERINFO_URL = "https://kapi.kakao.com/v2/user/me";
-    private final String KAKAO_AUTHORIZATION_URL = "https://kauth.kakao.com/oauth/authorize";
+    @Value("${kakao.token_url}")
+    private String KAKAO_TOKEN_URL;
+
+    @Value("${kakao.userinfo_url}")
+    private String KAKAO_USERINFO_URL;
+
+    @Value("${kakao.authorization_url}")
+    private String KAKAO_AUTHORIZATION_URL;
 
     // google
     @Value("${google.client.id}")
@@ -43,9 +48,14 @@ public class Oauth2Util {
     @Value("${google.client.secret}")
     private String GOOGLE_CLIENT_SECRET;
 
-    private final String GOOGLE_TOKEN_URL = "https://oauth2.googleapis.com/token";
-    private final String GOOGLE_USERINFO_URL = "https://www.googleapis.com/oauth2/v2/userinfo";
-    private final String GOOGLE_AUTHORIZATION_URL = "https://accounts.google.com/o/oauth2/v2/auth";
+    @Value("${google.token_url}")
+    private String GOOGLE_TOKEN_URL;
+
+    @Value("${google.userinfo_url}")
+    private String GOOGLE_USERINFO_URL;
+
+    @Value("${google.authorization_url}")
+    private String GOOGLE_AUTHORIZATION_URL;
 
     // naver
     @Value("${naver.client.id}")
@@ -57,9 +67,14 @@ public class Oauth2Util {
     @Value("${naver.client.secret}")
     private String NAVER_CLIENT_SECRET;
 
-    private final String NAVER_TOKEN_URL = "https://nid.naver.com/oauth2.0/token";
-    private final String NAVER_USERINFO_URL = "https://openapi.naver.com/v1/nid/me";
-    private final String NAVER_AUTHORIZATION_URL = "https://nid.naver.com/oauth2.0/authorize";
+    @Value("${naver.token_url}")
+    private String NAVER_TOKEN_URL;
+
+    @Value("${naver.userinfo_url}")
+    private String NAVER_USERINFO_URL;
+
+    @Value("${naver.authorization_url}")
+    private String NAVER_AUTHORIZATION_URL;
 
 
     private static final RestTemplate restTemplate = new RestTemplate();
