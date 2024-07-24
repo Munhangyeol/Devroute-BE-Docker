@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.crawling;
 
+import com.teamdevroute.devroute.crawling.dto.CrawledCompanyDto;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.jsoup.Jsoup;
@@ -25,15 +26,28 @@ public class CompanyCrawling {
 
     private CompanyCrawlingService companyCrawlingService;
 
-    public CompanyCrawling() {
-    }
-
     public CompanyCrawling(WebDriverUtil webDriverUtil, CompanyCrawlingService companyCrawlingService) {
         this.webDriverUtil = webDriverUtil;
         this.companyCrawlingService = companyCrawlingService;
     }
 
-    public void getThirtyCompany(int page) {
+    public CrawledCompanyDto getCompanyThreePage() {
+        CrawledCompanyDto crawledCompanyDto = CrawledCompanyDto.builder()
+                .enterpriseNames(new ArrayList<>())
+                .enterpriseGrades(new ArrayList<>())
+                .enterpriseSalaries(new ArrayList<>())
+                .enterpriseLogo(new ArrayList<>())
+                .build();
+
+        for(int page=1;page<=3;page++) {
+            crawledCompanyDto.mergeCrawledCompanyDto(getTenCompany(page));
+        }
+
+        return crawledCompanyDto;
+    }
+
+    private CrawledCompanyDto getTenCompany(int page) {
+
         String URL = switch (page) {
             case 2 -> JOBPLANET_PAGE_2_URL;
             case 3 -> JOBPLANET_PAGE_3_URL;
@@ -61,6 +75,7 @@ public class CompanyCrawling {
         driver.navigate().back();
         driver.navigate().forward();
 
+        CrawledCompanyDto crawledCompanyDto = null;
 
         try{
             // 상위 10개 기업 이름 받아서 List에 저장
@@ -74,7 +89,6 @@ public class CompanyCrawling {
 
                 String subData = data.substring(0, data.length() - 9);
                 enterpriseNames.add(subData);
-
 
             }
             for(WebElement element : driver.findElements(By.className("notranslate"))){
@@ -93,12 +107,21 @@ public class CompanyCrawling {
             enterpriseSalaries.remove(1);
             enterpriseSalaries.remove(0);
 
-            companyCrawlingService.createCompany(enterpriseNames, enterpriseSalaries, enterpriseGrades, enterpriseLogo);
+            crawledCompanyDto = CrawledCompanyDto.builder()
+                    .enterpriseNames(enterpriseNames)
+                    .enterpriseGrades(enterpriseGrades)
+                    .enterpriseLogo(enterpriseLogo)
+                    .enterpriseSalaries(enterpriseSalaries)
+                    .build();
+
+            companyCrawlingService.createCompany(crawledCompanyDto);
 
         } catch(Exception e){
             e.printStackTrace();
         }
 
         webDriverUtil.closeChromeDriver();
+
+        return crawledCompanyDto;
     }
 }
