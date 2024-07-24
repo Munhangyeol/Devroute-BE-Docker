@@ -25,6 +25,7 @@ public class RecruitmentCrawling {
     private final static String JUMPIT_URL = "https://www.jumpit.co.kr/positions?jobCategory=1&sort=rsp_rate";
 
     private WebDriverUtil webDriverUtil;
+    private RecruitmentCrawlingService recruitmentCrawlingService;
 
     public RecruitmentCrawling(WebDriverUtil webDriverUtil) {
         this.webDriverUtil = webDriverUtil;
@@ -41,11 +42,6 @@ public class RecruitmentCrawling {
 
         // 현재 페이지의 소스코드 가져오기
         Document doc = Jsoup.parse(driver.getPageSource());
-
-        // 상위 10개 기업 이름 및 연봉 가져오기
-        List<String> enterpriseSalaries = new ArrayList<>();
-        List<String> enterpriseGrades = new ArrayList<>();
-        List<String> enterpriseLogo = new ArrayList<>();
 
         driver.manage().window().maximize();
 
@@ -121,9 +117,6 @@ public class RecruitmentCrawling {
                     crawledRecruitmentDtoList.get(idx++).setCareer(career);
                 }
             }
-
-            log.info(crawledRecruitmentDtoList.toString());
-
 
         } catch (Exception e) {
             e.printStackTrace();
