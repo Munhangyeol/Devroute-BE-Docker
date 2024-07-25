@@ -31,8 +31,6 @@ public class VideoController {
             initializeTechnologyStack();
         return "Successfull FetchAndSave Videos!!";
     }
-
-
     @ResponseBody
     @GetMapping("/lecture")
     public List<LectureResponseDTO> getRecommendLectureList(@RequestParam("platform_name") String platform_name
@@ -42,13 +40,11 @@ public class VideoController {
     }
 
     private void addCountTechnologyStackByStackName(String tech_name) {
-        TechnologyStack technologyStack = technologyStackRepository.findByName(tech_name);
-        if (technologyStack != null) {
-            technologyStack.setAddedCount();
-            technologyStackRepository.save(technologyStack);
-        } else {
-            throw new RuntimeException("Technology stack not found: " + tech_name);
-        }
+        TechnologyStack technologyStack = technologyStackRepository.findByName(tech_name)
+                .orElseThrow(()-> new RuntimeException("Technology stack not found: " + tech_name));
+        technologyStack.setAddedCount();
+        technologyStackRepository.save(technologyStack);
+
     }
 
 
