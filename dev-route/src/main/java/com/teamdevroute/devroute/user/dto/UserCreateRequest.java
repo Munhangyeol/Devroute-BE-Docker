@@ -1,18 +1,19 @@
 package com.teamdevroute.devroute.user.dto;
 
 import com.teamdevroute.devroute.user.domain.User;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 import lombok.Builder;
 
 public record UserCreateRequest (
        String email,
        String password,
        String name,
-       String development_field,
+       DevelopField development_field,
        String loginType
 ) {
 
     @Builder
-    public UserCreateRequest(String email, String password, String name, String development_field, String loginType) {
+    public UserCreateRequest(String email, String password, String name, DevelopField development_field, String loginType) {
         this.email = email;
         this.password = password;
         this.name = name;
