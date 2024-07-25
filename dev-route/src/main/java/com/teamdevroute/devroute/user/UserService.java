@@ -62,28 +62,28 @@ public class UserService {
             case KAKAO -> {
                 return oauth2Util.getKakaoRedirectUrl();
             }
-//            case GOOGLE -> {
-//                return oauth2Util.getGoogleRedirectUrl();
-//            }
-//            case NAVER -> {
-//                return oauth2Util.getAppleRedirectUrl();
-//            }
+            case GOOGLE -> {
+                return oauth2Util.getGoogleRedirectUrl();
+            }
+            case NAVER -> {
+                return oauth2Util.getNaverRedirectUrl();
+            }
         }
         return null;
     }
 
-    public String getAccessToken(String authorizationCode, LoginType loginType){
+    public String getAccessToken(String authorizationCode, LoginType loginType, String state){
         String accessToken = null;
         switch (loginType) {
             case KAKAO -> {
                 accessToken = oauth2Util.getKakaoAccessToken(authorizationCode);
             }
-//            case GOOGLE -> {
-//                accessToken = oauth2Util.getGoogleAccessToken(authorizationCode);
-//            }
-//            case NAVER -> {
-//                accessToken = authorizationCode;
-//            }
+            case GOOGLE -> {
+                accessToken = oauth2Util.getGoogleAccessToken(authorizationCode);
+            }
+            case NAVER -> {
+                accessToken = oauth2Util.getNaverAccessToken(authorizationCode, state);
+            }
         }
         return accessToken;
     }
@@ -94,12 +94,12 @@ public class UserService {
             case KAKAO -> {
                 userAuthResponse = oauth2Util.getKakaoUserInformation(accessToken);
             }
-//            case GOOGLE -> {
-//                userCreateResponse = oauth2Util.getGoogleUserInformation(accessToken);
-//            }
-//            case NAVER -> {
-//                userCreateResponse = oauth2Util.getNAVERUserInformation(accessToken);
-//            }
+            case GOOGLE -> {
+                userAuthResponse = oauth2Util.getGoogleUserInformation(accessToken);
+            }
+            case NAVER -> {
+                userAuthResponse = oauth2Util.getNaverUserInformation(accessToken);
+            }
         }
 
         Optional<User> findUser = userRepository.findByEmail(userAuthResponse.email());
@@ -109,7 +109,7 @@ public class UserService {
                     .email(userAuthResponse.email())
                     .name(userAuthResponse.name())
                     .userRole("USER")
-                    .loginType("KAKAO")
+                    .loginType(loginType.toString())
                     .build();
 
             user = userRepository.save(createdUser);
