@@ -27,7 +27,7 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     private static final String[] AUTH_WHITELIST = {
-        "/login","/fetch-and-save","/lecture"
+        "/login","/fetch-and-save","/lecture", "/signup/**"
     };
 
     @Bean
@@ -47,6 +47,7 @@ public class SecurityConfig {
                         .accessDeniedHandler(accessDeniedHandler))
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(AUTH_WHITELIST).permitAll()
+                        .requestMatchers("/auth/**").permitAll()
                         .anyRequest().authenticated());
 
         return http.build();

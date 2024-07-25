@@ -1,10 +1,7 @@
 package com.teamdevroute.devroute.user.domain;
 
 import com.teamdevroute.devroute.global.BaseTimeEntity;
-import com.teamdevroute.devroute.user.dto.UserCreateResponse;
 import com.teamdevroute.devroute.user.enums.DevelopField;
-import com.teamdevroute.devroute.user.enums.LoginType;
-import com.teamdevroute.devroute.user.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
@@ -45,7 +42,8 @@ public class User extends BaseTimeEntity {
     private String userRole;
 
     @Column(name = "development_field")
-    private String developField;
+    @Enumerated(EnumType.STRING)
+    private DevelopField developField;
 
     @Column
     @Size(min = 1, max = 100, message = "소개말은 1 ~ 100자 이여야 합니다.")
@@ -56,7 +54,7 @@ public class User extends BaseTimeEntity {
     private String goal_info;
 
     @Builder
-    public User(String email, String password, String name, LocalDateTime last_password_changed, String loginType, String userRole, String developField, String introduce_info, String goal_info) {
+    public User(String email, String password, String name, LocalDateTime last_password_changed, String loginType, String userRole, DevelopField developField, String introduce_info, String goal_info) {
         this.email = email;
         this.password = password;
         this.name = name;
