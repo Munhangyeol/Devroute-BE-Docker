@@ -1,7 +1,9 @@
 package com.teamdevroute.devroute.global.auth.filter;
 
 import com.teamdevroute.devroute.global.auth.jwt.JwtUtils;
+import com.teamdevroute.devroute.global.exception.InvalidAccessException;
 import com.teamdevroute.devroute.user.service.CustomUserDetailsService;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,6 +25,8 @@ public class JwtAuthFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+
+
         String authorizationHeader = request.getHeader("Authorization");
 
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
@@ -42,6 +46,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                 }
             }
         }
+
+
+
         filterChain.doFilter(request, response);
     }
 }
