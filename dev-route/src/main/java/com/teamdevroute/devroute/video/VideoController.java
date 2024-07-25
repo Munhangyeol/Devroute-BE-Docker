@@ -31,8 +31,6 @@ public class VideoController {
             initializeTechnologyStack();
         return "Successfull FetchAndSave Videos!!";
     }
-
-
     @ResponseBody
     @GetMapping("/lecture")
     public List<LectureResponseDTO> getRecommendLectureList(@RequestParam("platform_name") String platform_name
