@@ -14,11 +14,4 @@ public record VisitorCountResponse(
         this.visitorCount = visitorCount;
         this.visitDate = visitDate;
     }
-
-    public static VisitorCountResponse of(VisitorCount visitorCount) {
-        return VisitorCountResponse.builder()
-                .visitorCount(visitorCount.getVisitCount())
-                .visitDate(visitorCount.getVisitDate())
-                .build();
-    }
 }
