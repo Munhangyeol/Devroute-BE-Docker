@@ -2,6 +2,7 @@ package com.teamdevroute.devroute;
 
 import com.teamdevroute.devroute.user.UserRepository;
 import com.teamdevroute.devroute.user.domain.User;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -27,7 +28,7 @@ public class DataLoader implements CommandLineRunner {
                         .name("윤성원")
                         .userRole("USER")
                         .password(encoder.encode("1234"))
-                        .developField("백엔드")
+                        .developField(DevelopField.BACKEND)
                         .loginType("NORMAL")
                         .build());
 
@@ -37,7 +38,7 @@ public class DataLoader implements CommandLineRunner {
                         .name("성원윤")
                         .userRole("ADMIN")
                         .password(encoder.encode("1234"))
-                        .developField("AI")
+                        .developField(DevelopField.AI)
                         .loginType("NORMAL")
                         .build());
     }

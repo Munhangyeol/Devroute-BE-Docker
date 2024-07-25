@@ -21,7 +21,7 @@ public class CompanyRecruitmentCrawling {
         this.recruitmentCrawling = recruitmentCrawling;
     }
 
-    @Scheduled(fixedRate = 60000)
+    //@Scheduled(fixedRate = 60000)
     public void companyAndRecruitmentCrawling() {
         CrawledCompanyDto crawledCompanyDto = companyCrawling.getCompanyThreePage();
         log.info(crawledCompanyDto.toString());
