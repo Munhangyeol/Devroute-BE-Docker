@@ -31,7 +31,7 @@ public class UserService {
     private final Oauth2Util oauth2Util;
 
     public UserCreateResponse createUser(UserCreateRequest request) {
-        User user = userRepository.save(request.toEntity(LoginType.NORMAL.name()));
+        User user = userRepository.save(request.toEntity(LoginType.NORMAL.name(), encoder.encode(request.password())));
         return UserCreateResponse.of(user);
     }
 

@@ -3,6 +3,7 @@ package com.teamdevroute.devroute.user.dto;
 import com.teamdevroute.devroute.user.domain.User;
 import com.teamdevroute.devroute.user.enums.DevelopField;
 import lombok.Builder;
+import lombok.Setter;
 
 public record UserCreateRequest (
        String email,
@@ -21,11 +22,11 @@ public record UserCreateRequest (
         this.loginType = loginType;
     }
 
-    public User toEntity(String loginType){
+    public User toEntity(String loginType, String encoded){
         return User.builder()
                 .email(email)
                 .name(name)
-                .password(password)
+                .password(encoded)
                 .developField(development_field)
                 .loginType(loginType)
                 .build();
