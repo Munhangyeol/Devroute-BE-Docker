@@ -3,6 +3,7 @@ package com.teamdevroute.devroute.user;
 import com.teamdevroute.devroute.global.auth.Oauth2Util;
 import com.teamdevroute.devroute.global.auth.LoginUserInfo;
 import com.teamdevroute.devroute.global.auth.jwt.JwtUtils;
+import com.teamdevroute.devroute.global.exception.DuplicateUserException;
 import com.teamdevroute.devroute.global.exception.UserNotFoundException;
 import com.teamdevroute.devroute.user.domain.User;
 import com.teamdevroute.devroute.user.dto.UserAuthResponse;
@@ -31,6 +32,9 @@ public class UserService {
     private final Oauth2Util oauth2Util;
 
     public UserCreateResponse createUser(UserCreateRequest request) {
+        if(checkEmailDuplicate(request.email())){
+            throw new DuplicateUserException();
+        }
         User user = userRepository.save(request.toEntity(LoginType.NORMAL.name(), encoder.encode(request.password())));
         return UserCreateResponse.of(user);
     }
@@ -128,4 +132,9 @@ public class UserService {
         return jwtUtils.create(loginUserInfo);
     }
 
+    private boolean checkEmailDuplicate(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }
+
