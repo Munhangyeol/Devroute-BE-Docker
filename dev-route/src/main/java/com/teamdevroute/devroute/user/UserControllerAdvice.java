@@ -1,6 +1,7 @@
 package com.teamdevroute.devroute.user;
 
 import com.teamdevroute.devroute.global.exception.DuplicateUserException;
+import com.teamdevroute.devroute.global.exception.InvalidAccessException;
 import com.teamdevroute.devroute.global.exception.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,4 +24,10 @@ public class UserControllerAdvice {
     public ResponseEntity handleDuplicateUserException(DuplicateUserException e) {
         return ResponseEntity.badRequest().body("중복되는 유저 정보입니다.");
     }
+
+    @ExceptionHandler(InvalidAccessException.class)
+    public ResponseEntity handleInvalidAccessException(InvalidAccessException e) {
+        return ResponseEntity.badRequest().body("접근 권한이 없습니다.");
+    }
+
 }

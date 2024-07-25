@@ -9,7 +9,7 @@ public final class ApiConstans {
     public static String YOUTUBE_API_URL_SEARCH="https://www.googleapis.com/youtube/v3/search?part=snippet&type=video";
 
 //    @Value("${udemy.api.url.search}")
-    public static String UDEMY_API_URL_SEARCH="https://www.udemy.com/api-2.0/courses/?search";
+    public static String UDEMY_API_URL_SEARCH="https://www.udemy.com/api-2.0/courses/?search=";
     public static String YOUTUBE_API_URL_FRONT_VIDEOID="https://www.youtube.com/watch?v=";
     public static String UDEMY_API_URL_FRONT_VIDEOID="https://www.udemy.com";
 
