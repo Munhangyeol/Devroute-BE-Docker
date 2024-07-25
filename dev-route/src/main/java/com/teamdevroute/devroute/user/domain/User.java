@@ -21,7 +21,7 @@ public class User extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull @Email
+    @NotNull @Email @Column(unique=true)
     @Size(min = 1, max = 50, message = "이메일은 1 ~ 50자 이여야 합니다.")
     private String email;
 

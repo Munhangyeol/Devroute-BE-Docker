@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.user;
 
+import com.teamdevroute.devroute.global.exception.DuplicateUserException;
 import com.teamdevroute.devroute.global.exception.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -16,5 +17,10 @@ public class UserControllerAdvice {
     @ExceptionHandler(BadCredentialsException.class)
     public ResponseEntity handleBadCredentialsException(BadCredentialsException e) {
         return ResponseEntity.badRequest().body("비밀번호가 일치하지 않습니다.");
+    }
+
+    @ExceptionHandler(DuplicateUserException.class)
+    public ResponseEntity handleDuplicateUserException(DuplicateUserException e) {
+        return ResponseEntity.badRequest().body("중복되는 유저 정보입니다.");
     }
 }
