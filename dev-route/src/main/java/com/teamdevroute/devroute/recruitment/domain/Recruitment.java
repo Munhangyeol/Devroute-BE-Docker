@@ -1,6 +1,7 @@
 package com.teamdevroute.devroute.recruitment.domain;
 
 import com.teamdevroute.devroute.company.Company;
+import com.teamdevroute.devroute.recruitment.enums.DevelopmentField;
 import com.teamdevroute.devroute.recruitment.enums.Source;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -31,6 +32,9 @@ public class Recruitment {
     private LocalDateTime dueDate;
 
     private String url;
+
+    @Enumerated(EnumType.STRING)
+    private DevelopmentField developmentField;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
