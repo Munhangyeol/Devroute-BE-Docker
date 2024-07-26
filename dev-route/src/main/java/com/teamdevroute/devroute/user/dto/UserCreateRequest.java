@@ -27,7 +27,7 @@ public record UserCreateRequest (
                 .email(email)
                 .name(name)
                 .password(encoded)
-                .developField(development_field)
+                .developField(DevelopField.NONE)
                 .loginType(loginType)
                 .build();
     }
