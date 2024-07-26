@@ -4,6 +4,7 @@ import static com.teamdevroute.devroute.video.constans.ApiConstans.INFREAN_CRAWR
 
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
 import com.teamdevroute.devroute.video.enums.TechnologyStackName;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import jakarta.persistence.criteria.CriteriaBuilder.In;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -101,6 +102,7 @@ public class InfreanVideoCrawling {
     }
 
     private WebDriver getWebDriver(String teck_stack) {
+        WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);

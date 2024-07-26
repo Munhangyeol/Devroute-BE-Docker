@@ -30,7 +30,6 @@ public class CompanyCrawling {
         this.webDriverUtil = webDriverUtil;
         this.companyCrawlingService = companyCrawlingService;
     }
-
     public CrawledCompanyDto getCompanyThreePage() {
         CrawledCompanyDto crawledCompanyDto = CrawledCompanyDto.builder()
                 .enterpriseNames(new ArrayList<>())

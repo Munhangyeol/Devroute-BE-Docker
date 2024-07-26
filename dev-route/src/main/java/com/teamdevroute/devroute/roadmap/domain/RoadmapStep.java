@@ -28,4 +28,7 @@ public class RoadmapStep {
         this.brief_info = brief_info;
     }
 
+    public RoadmapStep() {
+
+    }
 }

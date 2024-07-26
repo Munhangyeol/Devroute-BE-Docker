@@ -7,7 +7,10 @@ import com.teamdevroute.devroute.roadmap.repository.RoadmapStepRepository;
 import org.openqa.selenium.devtools.idealized.Javascript;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.teamdevroute.devroute.roadmap.description.Ai.stepsAiBriefNames;
 import static com.teamdevroute.devroute.roadmap.description.Ai.stepsAiNames;
@@ -27,14 +30,14 @@ public class RoadmapService {
         this.roadmapStepRepository = roadmapStepRepository;
     }
 
-    public RoadmapResponseDTO findByDevelpmentField(String develpmentField) {
-        RoadmapStep roadmapStep = roadmapStepRepository.findByDevelopmentField(develpmentField)
+    public List<RoadmapResponseDTO> findByDevelpmentField(String develpmentField) {
+        List<RoadmapStep> roadmapSteps = roadmapStepRepository.findByDevelopmentField(develpmentField)
                 .orElseThrow(()->new RuntimeException("Repository " +
                         "hasn't this development roadmapstep"));
-        return RoadmapResponseDTO.builder()
+        return roadmapSteps.stream().map(roadmapStep -> RoadmapResponseDTO.builder().
+                brief_info(roadmapStep.getBrief_info())
                 .name(roadmapStep.getName())
-                .brief_info(roadmapStep.getBrief_info())
-                .build();
+                .build()).collect(Collectors.toList());
     }
     public DetailedRoadmapResponseDTO findByDevelpmentFieldAndStepsName(String develpmentField, String stepsName) {
         return new DetailedRoadmapResponseDTO();

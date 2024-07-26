@@ -46,8 +46,8 @@ public class VideoService {
     //매주 토요일에 실행
     @Scheduled(cron = "* * * * * 6",zone = "Asia/Seoul")
     public void fetchAndSaveVideo() throws IOException {
-        fetchAndSaveYoutubeVideos();
-        fetchAndSaveUdemyVideos();
+//        fetchAndSaveYoutubeVideos();
+//        fetchAndSaveUdemyVideos();
         fetchAndSaveInfreanVideos();
     }
 
