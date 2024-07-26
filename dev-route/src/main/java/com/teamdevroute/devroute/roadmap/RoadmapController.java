@@ -25,4 +25,12 @@ public class RoadmapController {
     , @PathVariable("stepsName") String stepsName){
         return roadmapService.findByDevelpmentFieldAndStepsName(develpmentField, stepsName);
     }
+
+    //이 메서드는 api프로토콜에 포함된것이 아님. 처음에 update만
+    @ResponseBody
+    @GetMapping("/roadmap/update")
+    public String updateRoadMap(){
+        roadmapService.updateAllRoadMap();
+        return "sucessfull update roadmap";
+    }
 }
