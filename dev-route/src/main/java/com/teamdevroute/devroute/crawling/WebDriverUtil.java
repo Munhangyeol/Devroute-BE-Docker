@@ -26,7 +26,6 @@ public class WebDriverUtil {
         chromeOptions.addArguments("--no-sandbox");
         chromeOptions.addArguments("--disable-dev-shm-usage");
         chromeOptions.addArguments("--disable-gpu");  // gpu 비활성화
-
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver(chromeOptions);
 

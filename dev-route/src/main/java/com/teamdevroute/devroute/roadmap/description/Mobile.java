@@ -5,8 +5,7 @@ public final class Mobile {
 
     public static String[] stepsAndroidNames = {
             "Java&Kotlin",
-            "Java",
-            "Kotlin",
+
             "Android Studio",
             "Drag and Drop Design",
             "Code Completion",
@@ -16,11 +15,22 @@ public final class Mobile {
             "Android Components",
             "App Lifecycle"
     };
-
     public static String[] stepsAndroidBriefNames = {
+            "안드로이드 개발 언어.",
+
+            "안드로이드 앱 개발 도구.",
+            "시각적 인터페이스 디자인.",
+            "자동 코드 완성 기능.",
+            "앱 테스트용 가상 기기.",
+            "안드로이드 기본 개념.",
+            "UI 디자인을 위한 XML.",
+            "안드로이드 주요 구성 요소.",
+            "앱의 생명주기 관리."
+    };
+
+
+    public static String[] stepsAndroidDetailedDescription = {
             "안드로이드 어플은 Kotlin과 Java라는 언어를 통해서 만들 수 있어요.",
-            "오래되고 안정적인 언어이며 자료가 많아요.",
-            "최신 기술을 가진 간결한 언어로, 개발이 더 쉽다는 장점을 가지고 있어요.",
             "안드로이드 앱 개발에 필요한 모든 도구를 제공하는 통합 개발 환경입니다.",
             "Android Studio를 이용하면 드래그로 쉽게 어플을 디자인할 수 있어요.",
             "자동완성 기능으로 코딩의 편리함을 제공합니다.",
@@ -38,8 +48,16 @@ public final class Mobile {
             "SwiftUI",
             "App Lifecycle"
     };
+    public static String[] stepsIosBriefNames={
+            "iOS 앱 개발 언어.",
+            "iOS 및 macOS 개발 도구.",
+            "Xcode에서 시각적 UI 디자인.",
+            "iOS 기본 개념.",
+            "Apple의 UI 프레임워크.",
+            "앱의 생명주기 관리."
+    };
 
-    public static String[] stepsIosBriefNames = {
+    public static String[] stepsIosDetailedDescription = {
             "iOS 어플은 Swift라는 언어를 이용해서 만들 수 있어요.",
             "Swift는 코드가 간결하고 빠르게 실행되어 iOS 앱 개발을 더 쉽고 효율적으로 만들어 줘요.",
             "Xcode는 iOS 앱 개발에 필요한 모든 도구를 제공하는 통합 개발 환경입니다.",

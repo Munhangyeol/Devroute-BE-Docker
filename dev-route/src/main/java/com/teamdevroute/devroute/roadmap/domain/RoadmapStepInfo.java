@@ -16,11 +16,17 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
+
+import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
-
+@Setter
 @Getter
 public class RoadmapStepInfo {
     @Id
@@ -30,41 +36,31 @@ public class RoadmapStepInfo {
 
     @OneToOne
     @JoinColumn(name="roadmap_step_id")
-    private RoadmapStep roadmap_step;
+    private RoadmapStep roadmapStep;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="company_id")
     private Company company;
     private String description;
-    @Convert(converter = JsonConverter.class)
-    private Map<String, Object> technology_stack;
-    @Convert(converter = JsonConverter.class)
-    private Map<String, Object> companies;
+    @Column(name = "technology_stacks", columnDefinition = "json")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private List<String> technology_stack;
+    @Column( columnDefinition = "json")
+    @JdbcTypeCode(SqlTypes.JSON)
+    private List<String> companies;
     private int used_ratio;
 
     public RoadmapStepInfo() {
     }
-}
-@Converter
-class JsonConverter implements AttributeConverter<Map<String, Object>, String> {
+    @Builder
+    public RoadmapStepInfo(RoadmapStep roadmapStep,Company company,String description,List<String> technology_stack
+    ,List<String> companies,int used_ratio) {
+        this.roadmapStep = roadmapStep;
+        this.company = company;
+        this.description = description;
+        this.technology_stack = technology_stack;
+        this.companies = companies;
+        this.used_ratio = used_ratio;
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
-
-    @Override
-    public String convertToDatabaseColumn(Map<String, Object> attribute) {
-        try {
-            return objectMapper.writeValueAsString(attribute);
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException("Error converting map to JSON string.", e);
-        }
-    }
-
-    @Override
-    public Map<String, Object> convertToEntityAttribute(String dbData) {
-        try {
-            return objectMapper.readValue(dbData, Map.class);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("Error converting JSON string to map.", e);
-        }
     }
 }

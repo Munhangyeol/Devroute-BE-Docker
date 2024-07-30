@@ -102,7 +102,8 @@ public class InfreanVideoCrawling {
     }
 
     private WebDriver getWebDriver(String teck_stack) {
-        WebDriverManager.chromedriver().setup();
+//        WebDriverManager.chromedriver().setup();
+        System.setProperty("chrome.driver", "/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
         WebDriver driver = new ChromeDriver(options);
