@@ -1,5 +1,8 @@
 package com.teamdevroute.devroute.crawling.dto;
 
+import com.teamdevroute.devroute.company.Company;
+import com.teamdevroute.devroute.recruitment.domain.Recruitment;
+import com.teamdevroute.devroute.recruitment.enums.Source;
 import lombok.*;
 
 import java.util.List;
@@ -24,5 +27,16 @@ public class CrawledRecruitmentDto {
         this.techList = techList;
         this.area = area;
         this.career = career;
+    }
+
+
+//    List<String> techStacks, String annual, LocalDateTime dueDate, String url, Company company, Source source
+    public Recruitment toEntity(Company company, Source source) {
+        return Recruitment.builder()
+                .techStacks(techList)
+                .annual(career)
+                .company(company)
+                .source(source)
+                .build();
     }
 }

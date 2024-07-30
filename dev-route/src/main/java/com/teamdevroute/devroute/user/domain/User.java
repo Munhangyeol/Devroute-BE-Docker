@@ -8,6 +8,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.LastModifiedDate;
 
 import java.time.LocalDateTime;
@@ -43,6 +44,7 @@ public class User extends BaseTimeEntity {
 
     @Column(name = "development_field")
     @Enumerated(EnumType.STRING)
+    @ColumnDefault("'NONE'")
     private DevelopField developField;
 
     @Column
