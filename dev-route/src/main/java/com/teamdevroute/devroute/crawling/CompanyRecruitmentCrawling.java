@@ -15,17 +15,19 @@ public class CompanyRecruitmentCrawling {
 
     private final CompanyCrawling companyCrawling;
     private final RecruitmentCrawling recruitmentCrawling;
+    private final RecruitmentCrawlingService recruitmentCrawlingService;
 
-    public CompanyRecruitmentCrawling(CompanyCrawling companyCrawling, RecruitmentCrawling recruitmentCrawling) {
+    public CompanyRecruitmentCrawling(CompanyCrawling companyCrawling, RecruitmentCrawling recruitmentCrawling, RecruitmentCrawlingService recruitmentCrawlingService) {
         this.companyCrawling = companyCrawling;
         this.recruitmentCrawling = recruitmentCrawling;
+        this.recruitmentCrawlingService = recruitmentCrawlingService;
     }
 
-    //@Scheduled(fixedRate = 60000)
+    @Scheduled(cron = "0 0 0 * * *")
     public void companyAndRecruitmentCrawling() {
         CrawledCompanyDto crawledCompanyDto = companyCrawling.getCompanyThreePage();
         log.info(crawledCompanyDto.toString());
-        recruitmentCrawling.crawlingJUMPIT(crawledCompanyDto.getEnterpriseNames());
+        List<CrawledRecruitmentDto> list = recruitmentCrawling.crawlingJUMPIT(crawledCompanyDto.getEnterpriseNames());
+        recruitmentCrawlingService.createRecruitment(list);
     }
-
 }
