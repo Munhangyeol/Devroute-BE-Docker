@@ -5,13 +5,11 @@ import lombok.Builder;
 import java.time.LocalDate;
 
 public record VisitorCountResponse(
-        Long visitorCount,
-        LocalDate visitDate
+        Long visitorCount
 ) {
 
     @Builder
-    public VisitorCountResponse(Long visitorCount, LocalDate visitDate) {
+    public VisitorCountResponse(Long visitorCount) {
         this.visitorCount = visitorCount;
-        this.visitDate = visitDate;
     }
 }

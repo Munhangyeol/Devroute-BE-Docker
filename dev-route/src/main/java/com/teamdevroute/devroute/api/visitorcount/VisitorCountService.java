@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -51,13 +52,25 @@ public class VisitorCountService {
 
     private void initTodayCount() {
         LocalDate today = LocalDate.now();
-        VisitorCount visitorCount = visitorCountRepository.findByVisitDate(today);
-        if (visitorCount == null) {
+        Optional<VisitorCount> visitorCount = visitorCountRepository.findByVisitDate(today);
+        if (visitorCount.isEmpty()) {
             visitorCountRepository.save(VisitorCount.builder()
                     .visitCount(0L)
                     .visitDate(today)
                     .build()
             );
         }
+    }
+
+    public VisitorCountResponse updateVisitorCount() {
+        LocalDate today = LocalDate.now();
+        VisitorCount visitorCount = visitorCountRepository.findByVisitDate(today)
+                .orElseThrow(() -> new IllegalArgumentException("오늘자 방문자 수가 없습니다."));
+
+        visitorCount.updateVisitorCount();
+        visitorCountRepository.save(visitorCount);
+        return VisitorCountResponse.builder()
+                .visitorCount(visitorCount.getVisitCount())
+                .build();
     }
 }

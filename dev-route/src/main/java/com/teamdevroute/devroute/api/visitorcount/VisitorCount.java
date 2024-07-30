@@ -29,4 +29,8 @@ public class VisitorCount {
     public VisitorCount() {
 
     }
+
+    public void updateVisitorCount() {
+        this.visitCount++;
+    }
 }

@@ -1,6 +1,7 @@
 package com.teamdevroute.devroute.user;
 
 import com.teamdevroute.devroute.user.domain.User;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 
 public class UserFixture {
 
@@ -9,7 +10,7 @@ public class UserFixture {
                 .email("email")
                 .password("password")
                 .name(name)
-                .developField("AI")
+                .developField(DevelopField.AI)
                 .build();
     }
 }
