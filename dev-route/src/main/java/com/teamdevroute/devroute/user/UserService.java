@@ -9,6 +9,7 @@ import com.teamdevroute.devroute.user.domain.User;
 import com.teamdevroute.devroute.user.dto.UserAuthResponse;
 import com.teamdevroute.devroute.user.dto.UserCreateRequest;
 import com.teamdevroute.devroute.user.dto.UserCreateResponse;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 import com.teamdevroute.devroute.user.enums.LoginType;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -113,6 +114,7 @@ public class UserService {
                     .email(userAuthResponse.email())
                     .name(userAuthResponse.name())
                     .userRole("USER")
+                    .developField(DevelopField.NONE)
                     .loginType(loginType.toString())
                     .build();
 
