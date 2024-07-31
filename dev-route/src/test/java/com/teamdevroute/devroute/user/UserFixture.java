@@ -10,7 +10,7 @@ public class UserFixture {
                 .email("email")
                 .password("password")
                 .name(name)
-                .developField(DevelopField.valueOf("AI"))
+                .developField(DevelopField.AI)
                 .build();
     }
 }

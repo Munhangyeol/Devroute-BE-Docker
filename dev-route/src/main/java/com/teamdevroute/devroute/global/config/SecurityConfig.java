@@ -30,9 +30,7 @@ public class SecurityConfig {
     private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
     private static final String[] AUTH_WHITELIST = {
-
         "/login","/fetch-and-save","/lecture", "/signup/**", "/token","/roadmap/**","/main/**"
-
 
 
     };
