@@ -27,7 +27,6 @@ public class VideoCrawlingTest {
     @Autowired
     private InfreanVideoCrawling infreanVideoCrawling;
 
-
     @DisplayName(("Web Driver가 잘 연결 되는지를 확인한다."))
     @Test
     public void isGetWebDriver() {

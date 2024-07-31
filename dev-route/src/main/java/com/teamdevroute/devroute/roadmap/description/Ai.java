@@ -11,8 +11,18 @@ public final class Ai {
             "SQL",
             "DL & ML"
     };
+    public static  String[] stepsAiBriefNames ={
+            "벡터와 행렬 다루는 수학",
+            "함수 변화율과 적분 연구",
+            "파이썬의 기초 문법 학습",
+            "파이썬 기능 제공 코드 모음",
+            "데이터 분석용 파이썬 라이브러리",
+            "배열 연산을 위한 파이썬 라이브러리",
+            "데이터베이스 관리 언어",
+            "딥러닝과 머신러닝"
+    };
 
-    public static  String[] stepsAiBriefNames = {
+    public static  String[] stepsAiDetailedDescription = {
             "행렬과 벡터를 통해 데이터를 해석하고, 인공지능 모델을 이해할 수 있는 학문입니다.",
             "기울기와 변화율을 이용해 머신러닝 및 인공지능 모델의 동작을 이해할 수 있습니다.",
             "파이썬을 사용해 데이터를 분석하고, 인공지능 모델을 실행할 수 있습니다.",

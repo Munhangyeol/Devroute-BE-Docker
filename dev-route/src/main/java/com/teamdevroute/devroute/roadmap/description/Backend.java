@@ -14,6 +14,18 @@ public final class Backend {
             "Express.js(Node.js framework)"
     };
     public static String[] stepBackendBriefNames = {
+            "객체 지향 프로그래밍 언어.",
+            "다재다능하고 사용하기 쉬운 언어.",
+            "웹 개발을 위한 스크립트 언어와 런타임.",
+            "웹에서 데이터 전송 프로토콜.",
+            "웹 서비스 설계 원칙.",
+            "관계형 데이터베이스 시스템.",
+            "문서 지향 데이터베이스.",
+            "Java용 경량 프레임워크.",
+            "Python 웹 애플리케이션 프레임워크.",
+            "Node.js 기반 웹 프레임워크."
+    };
+    public static String[] stepsBackendDetailedDescription = {
             "한국의 전자정부 시스템과 주요 기업에서 널리 사용되는 언어입니다.",
             "배우기 쉽고 코드가 간결하여 입문자들에게 적합한 언어입니다.",
             "웹 브라우저와 서버 개발 모두에 사용할 수 있는 유용한 언어입니다.",

@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 public class RoadmapController {
     private final RoadmapService  roadmapService;
@@ -16,7 +18,7 @@ public class RoadmapController {
     }
     @ResponseBody
     @GetMapping("/roadmap/{develpmentField}")
-    public RoadmapResponseDTO getRoadMap(@PathVariable("develpmentField") String develpmentField){
+    public List<RoadmapResponseDTO> getRoadMap(@PathVariable("develpmentField") String develpmentField){
         return roadmapService.findByDevelpmentField(develpmentField);
     }
     @ResponseBody

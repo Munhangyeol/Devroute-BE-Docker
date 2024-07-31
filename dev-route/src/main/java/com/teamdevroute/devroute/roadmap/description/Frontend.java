@@ -9,8 +9,16 @@ public final class Frontend {
             "Npm",
             "React, Next.js, Vue.js"
     };
+    public static String[] stepsFrontendBriefNames  = {
+            "웹 페이지 마크업 언어.",
+            "웹 페이지 스타일 지정 언어.",
+            "동적 웹 콘텐츠 생성.",
+            "소스 코드 버전 관리.",
+            "패키지 관리 및 설치 도구.",
+            "프론트엔드 개발 라이브러리/프레임워크."
+    };
 
-    public static String[] stepsFrontendBriefNames = {
+    public static String[] stepsFrontendDetailedDescrption = {
             "웹 페이지의 구조를 정의하는 마크업 언어입니다.",
             "웹 페이지의 스타일과 레이아웃을 설계하는 언어입니다.",
             "웹 페이지에 동적인 기능을 추가하는 프로그래밍 언어입니다.",
