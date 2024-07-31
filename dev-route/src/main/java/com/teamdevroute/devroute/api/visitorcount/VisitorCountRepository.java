@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface VisitorCountRepository extends JpaRepository<VisitorCount, Long> {
 
-    VisitorCount findByVisitDate(LocalDate date);
+    Optional<VisitorCount> findByVisitDate(LocalDate date);
 
     @Query("SELECT sum(v.visitCount) FROM VisitorCount v " +
             "WHERE v.visitDate BETWEEN :start AND :end")
