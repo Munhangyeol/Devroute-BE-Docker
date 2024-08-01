@@ -1,12 +1,7 @@
 package com.teamdevroute.devroute.roadmap.domain;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teamdevroute.devroute.company.Company;
-import jakarta.persistence.AttributeConverter;
+import com.teamdevroute.devroute.company.domain.Company;
 import jakarta.persistence.Column;
-import jakarta.persistence.Convert;
-import jakarta.persistence.Converter;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -15,9 +10,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
-import java.io.IOException;
+
 import java.util.List;
-import java.util.Map;
 
 import lombok.Builder;
 import lombok.Getter;

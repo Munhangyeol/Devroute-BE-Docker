@@ -2,8 +2,8 @@ package com.teamdevroute.devroute.recruitment.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.teamdevroute.devroute.company.Company;
-import com.teamdevroute.devroute.company.CompanyRepository;
+import com.teamdevroute.devroute.company.domain.Company;
+import com.teamdevroute.devroute.company.repository.CompanyRepository;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.enums.SearchKeyWord;
 import com.teamdevroute.devroute.recruitment.enums.Source;

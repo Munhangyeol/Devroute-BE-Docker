@@ -1,18 +1,15 @@
 package com.teamdevroute.devroute.roadmap;
 
-import com.teamdevroute.devroute.company.Company;
+import com.teamdevroute.devroute.company.domain.Company;
 import com.teamdevroute.devroute.roadmap.domain.RoadmapStep;
 import com.teamdevroute.devroute.roadmap.domain.RoadmapStepInfo;
 import com.teamdevroute.devroute.roadmap.dto.DetailedRoadmapResponseDTO;
 import com.teamdevroute.devroute.roadmap.dto.RoadmapResponseDTO;
 import com.teamdevroute.devroute.roadmap.repository.RoadmapStepInfoRepository;
 import com.teamdevroute.devroute.roadmap.repository.RoadmapStepRepository;
-import org.openqa.selenium.devtools.idealized.Javascript;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static com.teamdevroute.devroute.roadmap.description.Ai.stepsAiBriefNames;
