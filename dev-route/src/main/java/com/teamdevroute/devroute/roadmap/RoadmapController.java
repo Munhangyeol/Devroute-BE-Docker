@@ -32,7 +32,7 @@ public class RoadmapController {
     @ResponseBody
     @GetMapping("/roadmap/update")
     public String updateRoadMap(){
-        roadmapService.updateAllRoadMap();
+        roadmapService.updateAllRoadmaps();
         return "sucessfull update roadmap";
     }
 }
