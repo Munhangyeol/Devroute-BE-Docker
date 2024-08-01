@@ -1,17 +1,15 @@
 package com.teamdevroute.devroute.crawling;
 
-import com.teamdevroute.devroute.company.Company;
-import com.teamdevroute.devroute.company.CompanyRepository;
+import com.teamdevroute.devroute.company.domain.Company;
+import com.teamdevroute.devroute.company.repository.CompanyRepository;
 import com.teamdevroute.devroute.crawling.dto.CrawledRecruitmentDto;
 import com.teamdevroute.devroute.global.exception.CompanyNotFoundException;
-import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.enums.Source;
 import com.teamdevroute.devroute.recruitment.repository.RecruitmentRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

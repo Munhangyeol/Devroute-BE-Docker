@@ -1,6 +1,6 @@
 package com.teamdevroute.devroute.crawling.dto;
 
-import com.teamdevroute.devroute.company.Company;
+import com.teamdevroute.devroute.company.domain.Company;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.enums.Source;
 import lombok.*;

@@ -1,4 +1,4 @@
-package com.teamdevroute.devroute.company;
+package com.teamdevroute.devroute.company.domain;
 
 import com.teamdevroute.devroute.global.BaseTimeEntity;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;

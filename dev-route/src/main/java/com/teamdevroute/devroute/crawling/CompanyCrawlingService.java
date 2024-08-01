@@ -1,7 +1,7 @@
 package com.teamdevroute.devroute.crawling;
 
-import com.teamdevroute.devroute.company.Company;
-import com.teamdevroute.devroute.company.CompanyRepository;
+import com.teamdevroute.devroute.company.domain.Company;
+import com.teamdevroute.devroute.company.repository.CompanyRepository;
 import com.teamdevroute.devroute.crawling.dto.CrawledCompanyDto;
 import org.springframework.stereotype.Service;
 
