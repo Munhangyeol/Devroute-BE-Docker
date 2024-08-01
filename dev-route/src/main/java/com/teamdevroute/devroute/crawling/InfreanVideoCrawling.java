@@ -102,10 +102,12 @@ public class InfreanVideoCrawling {
     }
 
     private WebDriver getWebDriver(String teck_stack) {
-//        WebDriverManager.chromedriver().setup();
-        System.setProperty("chrome.driver", "/chromedriver.exe");
+        WebDriverManager.chromedriver().setup();
+//        System.setProperty("chrome.driver", "/chromedriver.exe");
         ChromeOptions options = new ChromeOptions();
         options.addArguments("--headless");
+        options.addArguments("--no-sandbox");
+        options.addArguments("--disable-dev-shm-usage");
         WebDriver driver = new ChromeDriver(options);
         driver.get(INFREAN_CRAWRLING_URL_SEARCH+teck_stack+"&types=ONLINE");
         return driver;

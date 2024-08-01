@@ -15,12 +15,9 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static com.teamdevroute.devroute.roadmap.description.Ai.stepsAiBriefNames;
-import static com.teamdevroute.devroute.roadmap.description.Ai.stepsAiNames;
-import static com.teamdevroute.devroute.roadmap.description.Backend.stepBackendBriefNames;
-import static com.teamdevroute.devroute.roadmap.description.Backend.stepsBackendNames;
-import static com.teamdevroute.devroute.roadmap.description.Frontend.stepsFrontendBriefNames;
-import static com.teamdevroute.devroute.roadmap.description.Frontend.stepsFrontendNames;
+import static com.teamdevroute.devroute.roadmap.description.Ai.*;
+import static com.teamdevroute.devroute.roadmap.description.Backend.*;
+import static com.teamdevroute.devroute.roadmap.description.Frontend.*;
 import static com.teamdevroute.devroute.roadmap.description.Mobile.*;
 import static com.teamdevroute.devroute.roadmap.enums.DevelopmentField.*;
 
@@ -35,10 +32,9 @@ public class RoadmapService {
         this.roadmapStepInfoRepository = roadmapStepInfoRepository;
     }
 
-    public List<RoadmapResponseDTO> findByDevelpmentField(String develpmentField) {
-        List<RoadmapStep> roadmapSteps = roadmapStepRepository.findByDevelopmentField(develpmentField)
-                .orElseThrow(()->new RuntimeException("Repository " +
-                        "hasn't this development roadmapstep"));
+    public List<RoadmapResponseDTO> findByDevelpmentField(String developmentField) {
+        List<RoadmapStep> roadmapSteps = roadmapStepRepository.findByDevelopmentField(developmentField)
+                .orElseThrow(()->new RuntimeException("해당 개발 분야에 대한 로드맵 단계가 없습니다: " + developmentField));
         return roadmapSteps.stream().map(roadmapStep -> RoadmapResponseDTO.builder().
                 brief_info(roadmapStep.getBrief_info())
                 .name(roadmapStep.getName())
@@ -46,10 +42,10 @@ public class RoadmapService {
     }
     public DetailedRoadmapResponseDTO findByDevelpmentFieldAndStepsName(String develpmentField, String stepsName) {
         RoadmapStep roadmapStep=roadmapStepRepository.findByNameAndDevelopmentField(stepsName, develpmentField).orElseThrow(
-                ()->new RuntimeException("This roadmap is not exist in this repo")
+                ()->new RuntimeException("해당 이름과 개발 분야에 대한 로드맵 단계가 없습니다")
         );
         RoadmapStepInfo roadmapStepInfo = roadmapStepInfoRepository.findByRoadmapStep(roadmapStep)
-                .orElseThrow(  ()->new RuntimeException("This roadmap is not exist in this repo")
+                .orElseThrow(  ()->new RuntimeException("해당 로드맵 단계에 대한 정보가 없습니다")
                 );
 
         return  DetailedRoadmapResponseDTO.builder()
@@ -59,49 +55,30 @@ public class RoadmapService {
                 .releated_enterprise(roadmapStepInfo.getCompanies())
                 .build();
     }
-    public void updateAllRoadMap(){
-        updateBackendRoadMap();
-        updateFrontendRoadMap();
-        updateAiRoadMap();
-        updateIosRoadMap();
-        updateAndroidRoadMap();
+    public void updateAllRoadmaps() {
+        updateRoadMap(stepsBackendNames, stepBackendBriefNames, stepsBackendDetailedDescription, String.valueOf(BACKEND),null,null,null,10);
+        updateRoadMap(stepsFrontendNames, stepsFrontendBriefNames, stepsFrontendDetailedDescrption, String.valueOf(FRONTEND),null,null,null,10);
+        updateRoadMap(stepsAiNames, stepsAiBriefNames, stepsAiDetailedDescription, String.valueOf(AIANDDATA), null, null, null, 10);
+        updateRoadMap(stepsIosNames, stepsIosBriefNames, stepsIosDetailedDescription, String.valueOf(MOBILE_IOS), null, null, null, 10);
+        updateRoadMap(stepsAndroidNames, stepsAndroidBriefNames, stepsAndroidDetailedDescription, String.valueOf(MOBILE_ANDROID), null, null, null, 10);
     }
 
-    //아래에서 null값을 넣어둔 이유는 아직 연관 기술 스택, 연관 기업, 비율 관련해서 미정이기 때문임.
-    public void updateBackendRoadMap() {
-        updateRoadMap(stepsBackendNames, stepBackendBriefNames, String.valueOf(BACKEND),null,null,null,10);
-    }
-    public void updateAndroidRoadMap() {
-        updateRoadMap(stepsAndroidNames, stepsAndroidBriefNames, String.valueOf(MOBILE_ANDROID),null,null,null,10);
-    }
 
-    public void updateIosRoadMap() {
-        updateRoadMap(stepsIosNames, stepsIosBriefNames, String.valueOf(MOBILE_IOS),null,null,null,10);
-    }
-
-    public void updateFrontendRoadMap() {
-        updateRoadMap(stepsFrontendNames, stepsFrontendBriefNames, String.valueOf(FROTEND),null,null,null,10);
-    }
-
-    public void updateAiRoadMap() {
-        updateRoadMap(stepsAiNames, stepsAiBriefNames, String.valueOf(AIANDDATA),null,null,null,10);
-    }
-    public void updateRoadMap(String[] stepNames, String[] stepBriefNames, String developmentField,
-                              Company company,List<String > companies,List<String> teck_stacks,int used_ratio) {
+    public void updateRoadMap(String[] stepNames, String[] stepBriefNames,String[] descriptions, String developmentField,
+                              Company company,List<String > companies,List<String> teck_stacks,int used_ratio
+    ) {
         for (int i = 0; i < stepNames.length; i++) {
-            roadmapStepRepository.save(RoadmapStep.builder()
+            RoadmapStep roadmapstep=roadmapStepRepository.save(RoadmapStep.builder()
                     .name(stepNames[i])
                     .developmentField(developmentField)
                     .brief_info(stepBriefNames[i])
                     .build());
-            RoadmapStep roadmapstep = roadmapStepRepository.findByNameAndDevelopmentField(stepNames[i], developmentField).orElseThrow(
-                    () -> new RuntimeException("This roadmap is not exist in repository")
-            );
             roadmapStepInfoRepository.save(RoadmapStepInfo.builder().roadmapStep(roadmapstep)
                     .company(company)
                     .companies(companies)
                     .technology_stack(teck_stacks)
                     .used_ratio(used_ratio)
+                    .description(descriptions[i])
                     .build());
         }
 
