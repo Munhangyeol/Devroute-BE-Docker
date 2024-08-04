@@ -78,6 +78,13 @@ public class JwtUtils implements AuthorizationProvider {
 
     @Override
     public Long getUserId(String token) {
-        return parseClaims(token).get("memberId", Long.class);
+        Claims claims = parseClaims(token);
+        Object memberId = claims.get("memberId");
+
+        if (memberId instanceof Number) {
+            return ((Number) memberId).longValue();
+        } else {
+            throw new IllegalStateException("Invalid memberId type in JWT");
+        }
     }
 }
