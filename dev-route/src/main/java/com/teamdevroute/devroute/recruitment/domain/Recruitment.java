@@ -3,6 +3,7 @@ package com.teamdevroute.devroute.recruitment.domain;
 import com.teamdevroute.devroute.company.domain.Company;
 import com.teamdevroute.devroute.recruitment.enums.DevelopmentField;
 import com.teamdevroute.devroute.recruitment.enums.Source;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -33,7 +34,7 @@ public class Recruitment {
     private String url;
 
     @Enumerated(EnumType.STRING)
-    private DevelopmentField developmentField;
+    private DevelopField developField;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "company_id")
@@ -43,11 +44,13 @@ public class Recruitment {
     private Source source;
 
     @Builder
-    public Recruitment(List<String> techStacks, String annual, LocalDateTime dueDate, String url, Company company, Source source) {
+    public Recruitment(Long id, List<String> techStacks, String annual, LocalDateTime dueDate, String url, DevelopField developField, Company company, Source source) {
+        this.id = id;
         this.techStacks = techStacks;
         this.annual = annual;
         this.dueDate = dueDate;
         this.url = url;
+        this.developField = developField;
         this.company = company;
         this.source = source;
     }
