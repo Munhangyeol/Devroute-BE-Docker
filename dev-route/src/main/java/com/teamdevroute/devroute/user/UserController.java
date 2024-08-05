@@ -1,5 +1,7 @@
 package com.teamdevroute.devroute.user;
 
+import com.teamdevroute.devroute.global.auth.LoginUserInfo;
+import com.teamdevroute.devroute.user.domain.CustomUserDetails;
 import com.teamdevroute.devroute.user.dto.UserCreateRequest;
 import com.teamdevroute.devroute.user.dto.UserCreateResponse;
 import com.teamdevroute.devroute.user.enums.LoginType;
@@ -10,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -107,5 +110,13 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("No token found");
         }
+    }
+
+    @GetMapping("/login/test")
+    public ResponseEntity<String> loginTest(@AuthenticationPrincipal CustomUserDetails userDetails) throws IOException {
+
+        LoginUserInfo user = userDetails.getUser();
+        System.out.println("user = " + user.toString());
+        return new ResponseEntity<>("유저가 로그인되었습니다.", HttpStatus.OK);
     }
 }
