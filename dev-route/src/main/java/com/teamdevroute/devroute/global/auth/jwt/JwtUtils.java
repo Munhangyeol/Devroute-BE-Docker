@@ -78,6 +78,7 @@ public class JwtUtils implements AuthorizationProvider {
 
     @Override
     public Long getUserId(String token) {
-        return parseClaims(token).get("memberId", Long.class);
+        Double db = parseClaims(token).get("memberId", Double.class);
+        return db.longValue();
     }
 }
