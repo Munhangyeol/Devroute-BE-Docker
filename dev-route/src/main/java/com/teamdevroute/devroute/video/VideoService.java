@@ -129,4 +129,9 @@ public class VideoService {
                 .map(video -> new LectureResponseDTO(video.getUrl(), video.getTitle(), video.getThumnail_url(),video.getPrice(), video.getPlatformName()))
                 .collect(Collectors.toList());
     }
+
+    public Videos findById(Long id) {
+        return videoRepository.findById(id)
+                .orElseThrow(VideoNotFounException::new);
+    }
 }

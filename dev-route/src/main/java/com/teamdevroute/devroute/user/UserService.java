@@ -18,6 +18,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Member;
 import java.util.Optional;
 
 import static com.teamdevroute.devroute.user.enums.LoginType.*;
@@ -138,5 +139,8 @@ public class UserService {
         return userRepository.existsByEmail(email);
     }
 
+    public User findByUserId(Long id) {
+        return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
+    }
 }
 

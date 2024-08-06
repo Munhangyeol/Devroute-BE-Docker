@@ -81,4 +81,8 @@ public class RoadmapService {
 
     }
 
+    public RoadmapStep findById(Long id) {
+        return roadmapStepRepository.findById(id)
+                .orElseThrow(RoadmapStepNotFoundException::new);
+    }
 }
