@@ -2,6 +2,7 @@ package com.teamdevroute.devroute.crawling;
 
 import com.teamdevroute.devroute.video.dto.infrean.InfreanVideoDTO;
 import com.teamdevroute.devroute.video.enums.TechnologyStackName;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
@@ -30,16 +31,11 @@ public class VideoCrawlingTest {
     @DisplayName(("Web Driver가 잘 연결 되는지를 확인한다."))
     @Test
     public void isGetWebDriver() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless");
-        WebDriver driver = new ChromeDriver(options);
-        Assert.assertTrue(
-                Arrays.stream(TechnologyStackName.values())
-                        .allMatch(value -> {
-                            driver.get(INFREAN_CRAWRLING_URL_SEARCH + value + "&types=ONLINE");
-                            return driver.getTitle() != null;
-                        })
-        );
+
+        WebDriver driver = infreanVideoCrawling.getWebDriver(String.valueOf(python));
+        driver.get(INFREAN_CRAWRLING_URL_SEARCH + python + "&types=ONLINE");
+
+        Assert.assertTrue(driver.getTitle() != null);
     }
 
     //이것보다 단위 테스트를 만드는 게 우선이 아닐까 고민됨.

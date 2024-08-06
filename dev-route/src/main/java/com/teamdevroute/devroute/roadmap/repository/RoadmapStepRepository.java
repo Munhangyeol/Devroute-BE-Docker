@@ -10,6 +10,8 @@ public interface RoadmapStepRepository extends JpaRepository<RoadmapStep,Long> {
     Optional<List<RoadmapStep>> findByDevelopmentField(String devlopmentField);
 
     Optional<RoadmapStep> findByNameAndDevelopmentField(String name, String devleopmentFiled);
+
+    long count();
 }
 
 
