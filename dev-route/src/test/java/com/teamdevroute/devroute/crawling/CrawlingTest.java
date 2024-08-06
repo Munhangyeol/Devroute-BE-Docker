@@ -31,7 +31,7 @@ public class CrawlingTest {
     }
 
     @Test
-    void get_thirty_companies() throws InterruptedException {
+    void get_thirty_companies() {
         CompanyCrawling crawling = new CompanyCrawling(webDriverUtil, companyCrawlingService);
         crawling.getCompanyThreePage();
     }
@@ -39,7 +39,6 @@ public class CrawlingTest {
     @Test
     void get_recruitment() {
         List<String> companyNames = new ArrayList<>(Arrays.asList("삼성"));
-
         RecruitmentCrawling recruitmentCrawling = new RecruitmentCrawling(webDriverUtil);
         List<CrawledRecruitmentDto> dtoList = recruitmentCrawling.crawlingJUMPIT(companyNames);
         assertThat(dtoList.size()).isEqualTo(10);

@@ -9,8 +9,11 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.stereotype.Component;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -76,7 +79,12 @@ public class CompanyCrawling {
 
         CrawledCompanyDto crawledCompanyDto = null;
 
-        try{
+
+        try{  // Cloudflare 보안 페이지가 사라질 때까지 기다림
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.className("us_titb_l3")));
+
+//            System.out.println(driver.findElements(By.cssSelector("#listCompanies > div > div.section_group > section:nth-child(1) > div > div > dl.content_col2_3.cominfo > dt > a")));
             // 상위 10개 기업 이름 받아서 List에 저장
             for(WebElement element : driver.findElements(By.className("us_titb_l3"))){
 
