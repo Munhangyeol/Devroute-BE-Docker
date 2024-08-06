@@ -24,7 +24,7 @@ public class CompanyRecruitmentCrawling {
     }
 
     @Scheduled(cron = "0 0 0 * * *")
-    public void companyAndRecruitmentCrawling() throws InterruptedException {
+    public void companyAndRecruitmentCrawling() {
         CrawledCompanyDto crawledCompanyDto = companyCrawling.getCompanyThreePage();
         log.info(crawledCompanyDto.toString());
         List<CrawledRecruitmentDto> list = recruitmentCrawling.crawlingJUMPIT(crawledCompanyDto.getEnterpriseNames());
