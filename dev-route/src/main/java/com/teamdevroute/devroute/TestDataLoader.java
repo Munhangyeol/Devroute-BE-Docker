@@ -35,6 +35,7 @@ public class TestDataLoader implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         final User user1 = userRepository.save(User.builder()
+                .id(1L)
                 .name("윤성원")
                 .email("admin@email.com")
                 .password(encoder.encode("password"))
@@ -44,6 +45,7 @@ public class TestDataLoader implements CommandLineRunner {
                 .introduce_info("소개말")
                 .build());
         final User user2 = userRepository.save(User.builder()
+                .id(2L)
                 .name("누군가")
                 .email("user@email.com")
                 .password(encoder.encode("password"))

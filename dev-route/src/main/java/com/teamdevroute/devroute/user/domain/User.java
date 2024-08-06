@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.user.domain;
 
+import com.teamdevroute.devroute.bookmark.Bookmark;
 import com.teamdevroute.devroute.global.BaseTimeEntity;
 import com.teamdevroute.devroute.user.enums.DevelopField;
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.boot.context.properties.bind.DefaultValue;
 import org.springframework.data.annotation.LastModifiedDate;
 
+import java.awt.print.Book;
 import java.time.LocalDateTime;
 
 @Entity
@@ -55,8 +57,12 @@ public class User extends BaseTimeEntity {
     @Size(min = 1, max = 10, message = "목표는 1 ~ 10자 이여야 합니다.")
     private String goal_info;
 
+    @OneToOne
+    private Bookmark bookmark;
+
     @Builder
-    public User(String email, String password, String name, LocalDateTime last_password_changed, String loginType, String userRole, DevelopField developField, String introduce_info, String goal_info) {
+    public User(Long id, String email, String password, String name, LocalDateTime last_password_changed, String loginType, String userRole, DevelopField developField, String introduce_info, String goal_info, Bookmark bookmark) {
+        this.id = id;
         this.email = email;
         this.password = password;
         this.name = name;
@@ -66,6 +72,10 @@ public class User extends BaseTimeEntity {
         this.developField = developField;
         this.introduce_info = introduce_info;
         this.goal_info = goal_info;
+        this.bookmark = bookmark;
     }
 
+    public void initBookmark(Bookmark bookmark) {
+        this.bookmark = bookmark;
+    }
 }
