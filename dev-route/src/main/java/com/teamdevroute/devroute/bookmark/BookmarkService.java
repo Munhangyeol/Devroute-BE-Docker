@@ -31,12 +31,11 @@ public class BookmarkService {
 
     public void updateBookmark(Long userId, BookmarkUpdateRequest request) {
         User user = userService.findByUserId(userId);
-        log.info("updateBookmark() : " + user.getEmail());
+        log.info("updateBookmark() : {}", user.getEmail());
 
         if(user.getBookmark() == null) {
             user.initBookmark(
                     Bookmark.builder()
-                        .techStacks(new ArrayList<>())
                         .videos(new ArrayList<>())
                         .companies(new ArrayList<>())
                         .roadmaps(new ArrayList<>())
@@ -54,9 +53,6 @@ public class BookmarkService {
             case "video":
                 bookmark.addVideo(videoService.findById(request.getId()));
                 break;
-            case "tech":
-                bookmark.addTechStack(technologyStackService.findById(request.getId()));
-                break;
             case "roadmap":
                 bookmark.addRoadmap(roadmapService.findById(request.getId()));
                 break;
@@ -67,7 +63,7 @@ public class BookmarkService {
 
     public Bookmark findBookmarkByType(Long id) {
         User user = userService.findByUserId(id);
-        log.info("findBookmarkByType() : " + user.getEmail());
+        log.info("findBookmarkByType() : {}", user.getEmail());
 
         return user.getBookmark();
     }
