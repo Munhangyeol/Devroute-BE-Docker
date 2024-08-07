@@ -4,9 +4,12 @@ import com.teamdevroute.devroute.company.domain.Company;
 import com.teamdevroute.devroute.company.repository.CompanyRepository;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.enums.Source;
+import com.teamdevroute.devroute.recruitment.repository.RecruitmentRepository;
 import com.teamdevroute.devroute.user.UserRepository;
 import com.teamdevroute.devroute.user.domain.User;
 import com.teamdevroute.devroute.user.enums.DevelopField;
+import com.teamdevroute.devroute.video.Repository.VideoRepository;
+import com.teamdevroute.devroute.video.domain.Videos;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +31,10 @@ public class DataLoader implements CommandLineRunner {
     private PasswordEncoder encoder;
     @Autowired
     private CompanyRepository companyRepository;
+    @Autowired
+    private RecruitmentRepository recruitmentRepository;
+    @Autowired
+    private VideoRepository videoRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -97,6 +104,27 @@ public class DataLoader implements CommandLineRunner {
                 Source.SARAMIN, "https://samsung.com",
                 DevelopField.MOBILE
         );
+
+        createVideo(
+                10000L, "Spring JPA",
+                "https://inflearn.co.kr",
+                0L
+        );
+        createVideo(
+                20000L, "React Native",
+                "https://udemy.co.kr",
+                0L
+        );
+        createVideo(
+                5000L, "AWS",
+                "https://youtube.co.kr",
+                0L
+        );
+        createVideo(
+                0L, "SQL",
+                "https://inflearn.co.kr",
+                0L
+        );
     }
 
     private Company createCompany(
@@ -126,7 +154,7 @@ public class DataLoader implements CommandLineRunner {
             String url,
             DevelopField developField
     ) {
-        Recruitment.builder()
+        Recruitment recruitment = Recruitment.builder()
                 .company(company)
                 .developField(developField)
                 .url(url)
@@ -135,5 +163,19 @@ public class DataLoader implements CommandLineRunner {
                 .dueDate(dueDate)
                 .source(source)
                 .build();
+        recruitmentRepository.save(recruitment);
+    }
+
+    private void createVideo(
+        Long price, String title,
+        String url, Long count
+    ) {
+        Videos videos = Videos.builder()
+                .price(price)
+                .title(title)
+                .url(url)
+                .count(count)
+                .build();
+        videoRepository.save(videos);
     }
 }

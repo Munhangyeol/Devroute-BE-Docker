@@ -37,18 +37,14 @@ public class Bookmark extends BaseTimeEntity {
     @Convert(converter = VideoListConverter.class)
     private List<BookmarkVideo> videos;
 
-    @Convert(converter = TechStackListConverter.class)
-    private List<BookmarkTech> techStacks;
-
     @Convert(converter = RoadmapListConverter.class)
     private List<BookmarkRoadmap> roadmaps;
 
     @Builder
-    public Bookmark(Long id, List<BookmarkCompany> companies, List<BookmarkVideo> videos, List<BookmarkTech> techStacks, List<BookmarkRoadmap> roadmaps) {
+    public Bookmark(Long id, List<BookmarkCompany> companies, List<BookmarkVideo> videos, List<BookmarkRoadmap> roadmaps) {
         this.id = id;
         this.companies = companies;
         this.videos = videos;
-        this.techStacks = techStacks;
         this.roadmaps = roadmaps;
     }
 
@@ -60,8 +56,5 @@ public class Bookmark extends BaseTimeEntity {
     }
     public void addRoadmap(RoadmapStep roadmapStep) {
         roadmaps.add(BookmarkRoadmap.from(roadmapStep));
-    }
-    public void addTechStack(TechnologyStack technologyStack) {
-        techStacks.add(BookmarkTech.from(technologyStack));
     }
 }
