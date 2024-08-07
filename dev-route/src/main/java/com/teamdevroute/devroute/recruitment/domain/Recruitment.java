@@ -1,7 +1,6 @@
 package com.teamdevroute.devroute.recruitment.domain;
 
 import com.teamdevroute.devroute.company.domain.Company;
-import com.teamdevroute.devroute.recruitment.enums.DevelopmentField;
 import com.teamdevroute.devroute.recruitment.enums.Source;
 import com.teamdevroute.devroute.user.enums.DevelopField;
 import jakarta.persistence.*;

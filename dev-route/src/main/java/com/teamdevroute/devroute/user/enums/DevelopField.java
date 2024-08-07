@@ -18,4 +18,15 @@ public enum DevelopField {
             default -> DevelopField.NONE;
         };
     }
+
+    public static DevelopField toEnumBySearchKeyWord(String type) {
+        return switch (type) {
+            case "백엔드" -> DevelopField.BACKEND;
+            case "프론트엔드" -> DevelopField.FRONTEND;
+            case "인공지능" -> DevelopField.AI;
+            case "모바일" -> DevelopField.MOBILE;
+            case "데이터" -> DevelopField.DATA_SCIENCE;
+            default -> DevelopField.NONE;
+        };
+    }
 }
