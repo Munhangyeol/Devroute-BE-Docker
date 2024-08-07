@@ -8,6 +8,7 @@ import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.enums.SearchKeyWord;
 import com.teamdevroute.devroute.recruitment.enums.Source;
 import com.teamdevroute.devroute.recruitment.repository.RecruitmentRepository;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -49,22 +50,22 @@ public class RecruitmentUpdateService {
         try {
             int total = objectMapper.readTree(initialResponse).path("jobs").path("total").asInt();
             for (int i = 0; i <= total / 100; i++) {
-                String url = API_URL + accessKey + "&keywords=" + keyword + "&start=" + i + "&count=100";
+                String url = API_URL + accessKey + "&keywords=" + keyword + "개발자" + "&start=" + i + "&count=100";
                 String response = restTemplate.getForObject(url, String.class);
                 JsonNode saraminResponses = objectMapper.readTree(response).path("jobs").path("job");
 
-                parseAndStoreRecruitment(saraminResponses);
+                parseAndStoreRecruitment(saraminResponses, keyword);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void parseAndStoreRecruitment(JsonNode saraminResponses) {
+    private void parseAndStoreRecruitment(JsonNode saraminResponses, String keyword) {
         List<Recruitment> recruitments = new ArrayList<>();
 
         for (JsonNode saraminResponse : saraminResponses) {
-            Recruitment recruitment = parseResponse(saraminResponse);
+            Recruitment recruitment = parseResponse(saraminResponse, keyword);
             if (!recruitmentRepository.existsByUrl(recruitment.getUrl())) {
                 recruitments.add(recruitment);
             }
@@ -73,7 +74,7 @@ public class RecruitmentUpdateService {
         recruitmentRepository.saveAll(recruitments);
     }
 
-    private Recruitment parseResponse(JsonNode jobNode) {
+    private Recruitment parseResponse(JsonNode jobNode, String keyword) {
         String url = jobNode.path("url").asText();
         String companyName = jobNode.path("company").path("detail").path("name").asText();
         String experienceLevel = jobNode.path("position").path("experience-level").path("name").asText();
@@ -98,6 +99,7 @@ public class RecruitmentUpdateService {
                 .url(url)
                 .company(company)
                 .source(Source.SARAMIN)
+                .developField(DevelopField.toEnumBySearchKeyWord(keyword))
                 .build();
     }
 }

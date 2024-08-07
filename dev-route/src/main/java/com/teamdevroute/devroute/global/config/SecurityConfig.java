@@ -35,7 +35,7 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
         "/login","/fetch-and-save","/lecture", "/signup/**",
-        "/token","/roadmap/**","/main/**", "/recruit/**", "/fetch-jobs"
+        "/token","/roadmap/**","/main/**", "/recruit/**", "/fetch-jobs", "/api/**"
     };
 
     @PostConstruct

@@ -15,4 +15,7 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> 
 
     @Query("select r from Recruitment r where r.developField = :developField")
     List<Recruitment> findByDevelopField(DevelopField developField);
+
+    @Query("SELECT r FROM Recruitment r WHERE r.developField = :developField AND r.source = 'SARAMIN'")
+    List<Recruitment> findByDevelopFieldAndSource(@Param("developField") DevelopField developField);
 }

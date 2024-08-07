@@ -3,12 +3,10 @@ package com.teamdevroute.devroute.recruitment.controller;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.service.RecruitmentService;
 import com.teamdevroute.devroute.recruitment.service.RecruitmentUpdateService;
+import com.teamdevroute.devroute.user.enums.DevelopField;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,5 +29,10 @@ public class RecruitmentController {
     ) {
         List<Recruitment> response = recruitmentService.findByType(type);
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/api/tech_stack/{type}")
+    public ResponseEntity filterTechStackRate(@PathVariable("type") DevelopField type) {
+        return ResponseEntity.ok(recruitmentService.filterTechStackRate(type));
     }
 }
