@@ -64,4 +64,11 @@ public class BookmarkService {
 
         bookmarkRepository.save(bookmark);
     }
+
+    public Bookmark findBookmarkByType(Long id) {
+        User user = userService.findByUserId(id);
+        log.info("findBookmarkByType() : " + user.getEmail());
+
+        return user.getBookmark();
+    }
 }
