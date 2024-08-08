@@ -1,6 +1,7 @@
 package com.teamdevroute.devroute.company.service;
 
 import com.teamdevroute.devroute.company.domain.Company;
+import com.teamdevroute.devroute.company.dto.CompanyDetailRecruitResponse;
 import com.teamdevroute.devroute.company.dto.CompanyDetailResponse;
 import com.teamdevroute.devroute.company.repository.CompanyRepository;
 import com.teamdevroute.devroute.company.dto.CompanyResponse;
@@ -35,6 +36,12 @@ public class CompanyService {
         Company company = companyRepository.findById(id)
                 .orElseThrow(CompanyNotFoundException::new);
         List<Recruitment> recruitments = recruitmentRepository.findByCompany(company);
-        return CompanyDetailResponse.from(company, recruitments);
+
+        List<CompanyDetailRecruitResponse> response = null;
+        if(!recruitments.isEmpty()) {
+            response= recruitments.stream().map(CompanyDetailRecruitResponse::from).toList();
+        }
+
+        return CompanyDetailResponse.from(company, response);
     }
 }

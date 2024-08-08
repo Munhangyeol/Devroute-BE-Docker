@@ -15,10 +15,10 @@ public class CompanyDetailResponse {
     private String info;
     private Double grade;
     private String averageSalary;
-    private List<Recruitment> recruitments;
+    private List<CompanyDetailRecruitResponse> recruitments;
 
     @Builder
-    public CompanyDetailResponse(String name, String info, Double grade, String averageSalary, List<Recruitment> recruitments) {
+    public CompanyDetailResponse(String name, String info, Double grade, String averageSalary, List<CompanyDetailRecruitResponse> recruitments) {
         this.name = name;
         this.info = info;
         this.grade = grade;
@@ -28,7 +28,7 @@ public class CompanyDetailResponse {
 
     public static CompanyDetailResponse from(
             Company company,
-            List<Recruitment> recruitments
+            List<CompanyDetailRecruitResponse> recruitments
     ) {
         return CompanyDetailResponse.builder()
                 .name(company.getName())
