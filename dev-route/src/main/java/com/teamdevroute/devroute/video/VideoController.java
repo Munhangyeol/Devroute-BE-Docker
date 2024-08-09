@@ -6,7 +6,8 @@ import java.util.List;
 import com.teamdevroute.devroute.video.Repository.TechnologyStackRepository;
 import com.teamdevroute.devroute.video.domain.TechnologyStack;
 import com.teamdevroute.devroute.video.dto.LectureResponseDTO;
-import com.teamdevroute.devroute.video.enums.TechnologyStackName;
+import com.teamdevroute.devroute.video.service.TechnologyStackService;
+import com.teamdevroute.devroute.video.service.VideoService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -29,8 +30,7 @@ public class VideoController {
     @GetMapping("/fetch-and-save")
     public String  fetchAndSaveYoutubeVideo() throws IOException {
         videoService.fetchAndSaveVideo();
-        if(technologyStackRepository.count()==0)
-            technologyStackService.initializeTechnologyStack();
+
         return "Successfull FetchAndSave Videos!!";
     }
     @ResponseBody

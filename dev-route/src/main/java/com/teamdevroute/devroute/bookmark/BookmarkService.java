@@ -1,18 +1,15 @@
 package com.teamdevroute.devroute.bookmark;
 
 import com.teamdevroute.devroute.company.service.CompanyService;
-import com.teamdevroute.devroute.recruitment.service.RecruitmentService;
 import com.teamdevroute.devroute.roadmap.RoadmapService;
 import com.teamdevroute.devroute.user.UserService;
 import com.teamdevroute.devroute.user.domain.User;
-import com.teamdevroute.devroute.video.TechnologyStackService;
-import com.teamdevroute.devroute.video.VideoService;
-import com.teamdevroute.devroute.video.domain.TechnologyStack;
+import com.teamdevroute.devroute.video.service.TechnologyStackService;
+import com.teamdevroute.devroute.video.service.VideoService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Member;
 import java.util.ArrayList;
 
 @Slf4j
