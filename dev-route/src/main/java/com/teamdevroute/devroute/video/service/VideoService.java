@@ -1,5 +1,6 @@
-package com.teamdevroute.devroute.video;
+package com.teamdevroute.devroute.video.service;
 
+import com.teamdevroute.devroute.video.exception.VideoNotFounException;
 import com.teamdevroute.devroute.video.Repository.TechnologyStackRepository;
 import com.teamdevroute.devroute.video.Repository.VideoRepository;
 import com.teamdevroute.devroute.video.domain.TechnologyStack;
@@ -55,6 +56,8 @@ public class VideoService {
         fetchAndSaveYoutubeVideos();
         fetchAndSaveUdemyVideos();
         fetchAndSaveInfreanVideos();
+        if(technologyStackRepository.count()==0)
+            initializeTechnologyStack();
 
     }
 
@@ -141,6 +144,14 @@ public class VideoService {
     public Videos findById(Long id) {
         return videoRepository.findById(id)
                 .orElseThrow(VideoNotFounException::new);
+    }
+    public void initializeTechnologyStack() {
+        for (TechnologyStackName value : TechnologyStackName.values()) {
+            technologyStackRepository.save(TechnologyStack.builder().
+                    name(String.valueOf(value))
+                    .count(0L).
+                    build());
+        }
     }
 }
 

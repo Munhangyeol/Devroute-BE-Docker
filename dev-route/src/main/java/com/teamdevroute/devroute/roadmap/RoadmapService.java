@@ -7,8 +7,6 @@ import com.teamdevroute.devroute.roadmap.dto.DetailedRoadmapResponseDTO;
 import com.teamdevroute.devroute.roadmap.dto.RoadmapResponseDTO;
 import com.teamdevroute.devroute.roadmap.repository.RoadmapStepInfoRepository;
 import com.teamdevroute.devroute.roadmap.repository.RoadmapStepRepository;
-import net.bytebuddy.implementation.bytecode.Throw;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +33,7 @@ public class RoadmapService {
         List<RoadmapStep> roadmapSteps = roadmapStepRepository.findByDevelopmentField(developmentField)
                 .orElseThrow(()->new RuntimeException("해당 개발 분야에 대한 로드맵 단계가 없습니다: " + developmentField));
         if(roadmapSteps.isEmpty()){
-            throw new RuntimeException(new RuntimeException("해당 개발 분야에 대한 로드맵 단계가 없습니다: " + developmentField));
+            throw new RuntimeException("해당 개발 분야에 대한 로드맵 단계가 없습니다: " + developmentField);
         }
         return roadmapSteps.stream().map(roadmapStep -> RoadmapResponseDTO.builder().
                 brief_info(roadmapStep.getBrief_info())
@@ -60,17 +58,17 @@ public class RoadmapService {
     }
     public void updateAllRoadmaps() {
         if(roadmapStepRepository.count()==0) {
-            updateRoadMap(stepsBackendNames, stepBackendBriefNames, stepsBackendDetailedDescription, String.valueOf(BACKEND), null, null, null, 10);
-            updateRoadMap(stepsFrontendNames, stepsFrontendBriefNames, stepsFrontendDetailedDescrption, String.valueOf(FRONTEND), null, null, null, 10);
-            updateRoadMap(stepsAiNames, stepsAiBriefNames, stepsAiDetailedDescription, String.valueOf(AIANDDATA), null, null, null, 10);
-            updateRoadMap(stepsIosNames, stepsIosBriefNames, stepsIosDetailedDescription, String.valueOf(MOBILE_IOS), null, null, null, 10);
-            updateRoadMap(stepsAndroidNames, stepsAndroidBriefNames, stepsAndroidDetailedDescription, String.valueOf(MOBILE_ANDROID), null, null, null, 10);
+            updateRoadMap(stepsBackendNames, stepBackendBriefNames, stepsBackendDetailedDescription, String.valueOf(BACKEND), null, null, stepsBackendRelatedStacks, 10);
+            updateRoadMap(stepsFrontendNames, stepsFrontendBriefNames, stepsFrontendDetailedDescrption, String.valueOf(FRONTEND), null, null, stepsfrontendRelatedStacks, 10);
+            updateRoadMap(stepsAiNames, stepsAiBriefNames, stepsAiDetailedDescription, String.valueOf(AIANDDATA), null, null, stepsAiRelatedStacks, 10);
+            updateRoadMap(stepsIosNames, stepsIosBriefNames, stepsIosDetailedDescription, String.valueOf(MOBILE_IOS), null, null, stepsIosRelatedStacks, 10);
+            updateRoadMap(stepsAndroidNames, stepsAndroidBriefNames, stepsAndroidDetailedDescription, String.valueOf(MOBILE_ANDROID), null, null, stepsAndroidRelatedStacks, 10);
         }
     }
 
 
-    private void updateRoadMap(String[] stepNames, String[] stepBriefNames,String[] descriptions, String developmentField,
-                              Company company,List<String> companies,List<String> teck_stacks,int used_ratio
+    private void updateRoadMap(String[] stepNames, String[] stepBriefNames, String[] descriptions, String developmentField,
+                               Company company, List<String> companies, List<String>[] teck_stacks, int used_ratio
     ) {
         for (int i = 0; i < stepNames.length; i++) {
             RoadmapStep roadmapstep=roadmapStepRepository.save(RoadmapStep.builder()
@@ -81,7 +79,7 @@ public class RoadmapService {
             roadmapStepInfoRepository.save(RoadmapStepInfo.builder().roadmapStep(roadmapstep)
                     .company(company)
                     .companies(companies)
-                    .technology_stack(teck_stacks)
+                    .technology_stack(teck_stacks[i])
                     .used_ratio(used_ratio)
                     .description(descriptions[i])
                     .build());
