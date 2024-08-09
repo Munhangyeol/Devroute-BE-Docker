@@ -1,5 +1,6 @@
 package com.teamdevroute.devroute.recruitment.repository;
 
+import com.teamdevroute.devroute.company.domain.Company;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.user.enums.DevelopField;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,6 @@ public interface RecruitmentRepository extends JpaRepository<Recruitment, Long> 
 
     @Query("SELECT r FROM Recruitment r WHERE r.developField = :developField AND r.source = 'SARAMIN'")
     List<Recruitment> findByDevelopFieldAndSource(@Param("developField") DevelopField developField);
+
+    List<Recruitment> findByCompany(Company company);
 }

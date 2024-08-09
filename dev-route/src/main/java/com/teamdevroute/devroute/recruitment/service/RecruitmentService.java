@@ -1,5 +1,8 @@
 package com.teamdevroute.devroute.recruitment.service;
 
+import com.teamdevroute.devroute.company.domain.Company;
+import com.teamdevroute.devroute.company.repository.CompanyRepository;
+import com.teamdevroute.devroute.global.exception.CompanyNotFoundException;
 import com.teamdevroute.devroute.recruitment.domain.Recruitment;
 import com.teamdevroute.devroute.recruitment.dto.TechStackFrequencyDto;
 import com.teamdevroute.devroute.recruitment.repository.RecruitmentRepository;
@@ -19,6 +22,7 @@ public class RecruitmentService {
 
     private final RecruitmentRepository recruitmentRepository;
     private final TechnologyStackCategory technologyStackCategory;
+    private final CompanyRepository companyRepository;
 
     public List<Recruitment> findByType(String type) {
         DevelopField developField = DevelopField.toEnum(type);
