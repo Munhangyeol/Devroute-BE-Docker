@@ -12,7 +12,7 @@ public class BookmarkServiceTest {
 
     @Test
     void update_bookmark() {
-        BookmarkUpdateRequest request = new BookmarkUpdateRequest(1L, "company");
-        bookmarkService.updateBookmark(1L, request);
+        BookmarkUpdateRequest request = new BookmarkUpdateRequest(1L, 1L, "company");
+        bookmarkService.updateBookmark(request);
     }
 }
