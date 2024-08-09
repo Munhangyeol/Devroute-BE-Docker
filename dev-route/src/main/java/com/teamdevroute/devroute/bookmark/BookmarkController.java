@@ -15,11 +15,9 @@ public class BookmarkController {
 
     @PostMapping("/bookmark")
     public ResponseEntity addBookmark(
-            @RequestParam(name = "userId") String id,
             @RequestBody BookmarkUpdateRequest request
     ) {
-
-        bookmarkService.updateBookmark(Long.parseLong(id), request);
+        bookmarkService.updateBookmark(request);
         return ResponseEntity.ok("북마크가 추가되었습니다.");
     }
 

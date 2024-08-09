@@ -29,8 +29,8 @@ public class BookmarkService {
     private final VideoService videoService;
     private final TechnologyStackService technologyStackService;
 
-    public void updateBookmark(Long userId, BookmarkUpdateRequest request) {
-        User user = userService.findByUserId(userId);
+    public void updateBookmark(BookmarkUpdateRequest request) {
+        User user = userService.findByUserId(request.getUserId());
         log.info("updateBookmark() : {}", user.getEmail());
 
         if(user.getBookmark() == null) {
