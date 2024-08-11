@@ -8,7 +8,6 @@ public final class Mobile {
 
     public static String[] stepsAndroidNames = {
             "Java&Kotlin",
-
             "Android Studio",
             "Drag and Drop Design",
             "Code Completion",
@@ -20,7 +19,6 @@ public final class Mobile {
     };
     public static String[] stepsAndroidBriefNames = {
             "안드로이드 개발 언어.",
-
             "안드로이드 앱 개발 도구.",
             "시각적 인터페이스 디자인.",
             "자동 코드 완성 기능.",
