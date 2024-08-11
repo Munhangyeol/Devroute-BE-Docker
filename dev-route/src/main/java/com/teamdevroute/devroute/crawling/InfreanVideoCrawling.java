@@ -55,8 +55,9 @@ public class InfreanVideoCrawling {
             log.error("An unexpected error occurred: " + e.getMessage(), e);
         } finally {
             // 브라우저 닫기
-            driver.quit();
+
         }
+        driver.quit();
         return result;
     }
 

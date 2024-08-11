@@ -42,6 +42,7 @@ public final class Ai {
             Arrays.asList("파이썬 & 판다스", "넘파이"),
             Arrays.asList("넘파이", "SQL"),
             Arrays.asList("DL & ML", "SQL"),
+            Arrays.asList("DL & ML"),
             Arrays.asList("DL & ML")
     };
 }
